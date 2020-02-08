@@ -2,31 +2,31 @@
     "unscored": [
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
-            "isOddOrVowl": false
+            "isOddOrVowl": true
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
-            "isOddOrVowl": false
+            "isOddOrVowl": true
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
-            "isOddOrVowl": false
+            "isOddOrVowl": true
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         }
@@ -34,481 +34,481 @@
     "scored": [
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a1",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a2",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a3",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a4",
-            "type": "number",
+            "type": "NUMBER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         },
         {
             "stimulus": "a5",
-            "type": "letter",
+            "type": "LETTER",
             "isSwitchedTask": true,
             "isOddOrVowl": false
         }

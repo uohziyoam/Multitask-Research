@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:MultitaskResearch/end.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 
 class CueStimulus {
   final String stimulus;
@@ -65,24 +68,27 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
+  final fs.Firestore firestore = fb.firestore();
   Timer timer1, timer2;
   Stopwatch stopwatch;
   var widthRatio, heightRatio;
   bool isCue = false, isStimulus = false, isButtonClicked = false;
-  int currentLevel = 1, totalLevels = 999, instructionStep = 1;
+  int currentLevel = 0, totalLevels = 999, instructionStep = 1;
 
-  Map map = {
-    "id": "21334", // widget.id
-    "res": [
-      {
-        "switchingCost": 52, //reactionTime stopwatch.elapsedMilliseconds
-        "isCorrect":
-            false, // CueStimulus.isOddOrVowl == left(true) || CueStimulus.isEvenOrConsonant == right(false)
-        "isSwitchedTask": true, // CusStimulus.isSwitchedTask
-        "type": "letter" // CusStimulus.type
-      }
-    ]
-  };
+  List res = [];
+
+  // Map map = {
+  //   "id": "21334", // widget.id
+  //   "res": [
+  //     {
+  //       "switchingCost": 52, //reactionTime stopwatch.elapsedMilliseconds
+  //       "isCorrect":
+  //           false, // CueStimulus.isOddOrVowl == left(true) || CueStimulus.isEvenOrConsonant == right(false)
+  //       "isSwitchedTask": true, // CusStimulus.isSwitchedTask
+  //       "type": "letter" // CusStimulus.type
+  //     }
+  //   ]
+  // };
 
   List<CueStimulus> numberLetter;
 
@@ -93,6 +99,7 @@ class _TestState extends State<Test> {
           numberLetter = s.list;
           totalLevels = s.list.length;
         }));
+    buttonClicked(true);
   }
 
   @override
@@ -109,10 +116,54 @@ class _TestState extends State<Test> {
     }
   }
 
-  void wrapResult() {}
+  void wrapResult(bool isLeft) {
+    Map<String, dynamic> mp = {
+      "switchingCost": stopwatch.elapsedMilliseconds,
+      "isCorrect": numberLetter[currentLevel - 1].isOddOrVowl == isLeft,
+      "isSwitchedTask": numberLetter[currentLevel - 1].isSwitchedTask,
+      "type": numberLetter[currentLevel - 1].type
+    };
 
-  void buttonClicked() {
+    res.add(mp);
+  }
+
+  bool isTestEnd() {
+    if (currentLevel == 5 && widget.isUnscored) {
+      // jump to new game
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Test(
+                    isUnscored: false,
+                    id: widget.id,
+                  )));
+      return true;
+    }
+
+    if (currentLevel == 80 && !widget.isUnscored) {
+      // send to server
+      Map<String, dynamic> mp = {"id": widget.id, "res": res};
+      firestore
+          .collection('multitask')
+          .add(mp)
+          .then((value) => print(value))
+          .catchError((onError) => print(onError));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => End()));
+      return true;
+    }
+    return false;
+  }
+
+  void buttonClicked(bool isLeft) {
     stopwatch = new Stopwatch();
+    if (currentLevel != 0) {
+      wrapResult(isLeft);
+    }
+    if (isTestEnd()) {
+      return;
+    }
+
     setState(() {
       isButtonClicked = true;
       currentLevel += 1;
@@ -136,30 +187,41 @@ class _TestState extends State<Test> {
   }
 
   Widget cueAndStimulus() {
-    // if (isCue) {
-    //   return Container(
-    //       margin: EdgeInsets.only(top: heightRatio * 10),
-    //       child: Text(
-    //         "${numberLetter[currentLevel - 1].type}",
-    //         style: TextStyle(fontSize: 120),
-    //       ));
-    // }
+    if (isCue) {
+      return Container(
+          margin: EdgeInsets.only(top: heightRatio * 10),
+          child: Text(
+            "${numberLetter[currentLevel - 1].type}",
+            style: TextStyle(fontSize: 120),
+          ));
+    }
 
-    // if (isStimulus) {
-    //   return Container(
-    //       margin: EdgeInsets.only(top: heightRatio * 10),
-    //       child: Text(
-    //         "${numberLetter[currentLevel - 1].stimulus}",
-    //         style: TextStyle(fontSize: 120),
-    //       ));
-    // }
+    if (isStimulus) {
+      return Container(
+          margin: EdgeInsets.only(top: heightRatio * 10),
+          child: Text(
+            "${numberLetter[currentLevel - 1].stimulus}",
+            style: TextStyle(fontSize: 120),
+          ));
+    }
 
     return Container(
         margin: EdgeInsets.only(top: heightRatio * 10),
         child: Text(
-          "a3",
+          "  ",
           style: TextStyle(fontSize: 120),
         ));
+  }
+
+  String letterNumber() {
+    if (numberLetter[currentLevel - 1].type.toUpperCase() == "NUMBER") {
+      return numberLetter[currentLevel - 1].isOddOrVowl ? "odd" : "even";
+    }
+
+    if (numberLetter[currentLevel - 1].type.toUpperCase() == "LETTER") {
+      return numberLetter[currentLevel - 1].isOddOrVowl ? "vowel" : "consonant";
+    }
+    return "vowel";
   }
 
   @override
@@ -170,96 +232,121 @@ class _TestState extends State<Test> {
         body: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        LinearProgressIndicator(
-          value: currentLevel / totalLevels,
+        Column(
+          children: <Widget>[
+            Container(
+              width: widthRatio * 768,
+              height: 20,
+              color: Colors.red,
+              child: Text(
+                "Instructions $currentLevel of $totalLevels",
+                textAlign: TextAlign.center,
+              ),
+            ),
+            LinearProgressIndicator(
+              value: currentLevel / totalLevels,
+            ),
+          ],
         ),
-        Text("$currentLevel"),
-        Padding(
-          padding: EdgeInsets.only(top: heightRatio * 300),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              isButtonClicked
-                  ? Container()
-                  : Padding(
-                      padding: EdgeInsets.only(left: widthRatio * 225),
-                      child: Container(
-                          width: 165,
-                          child: ButtonTheme(
-                              padding: EdgeInsets.only(right: 30),
-                              minWidth: widthRatio * 80,
-                              height: 35,
-                              disabledColor: Color.fromARGB(255, 255, 0, 1),
-                              child: RaisedButton(
-                                  onPressed: isButtonClicked
-                                      ? null
-                                      : () {
-                                          this.stopWatchPrint();
-                                          this.buttonClicked();
-                                        },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Icon(
-                                        IconData(58846,
-                                            fontFamily: 'MaterialIcons',
-                                            matchTextDirection: true),
-                                        size: 35,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 00),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        child: Text('Odd / Vowel',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 20)),
-                                      ),
-                                    ],
-                                  ))))),
-              this.cueAndStimulus(),
-              isButtonClicked
-                  ? Container()
-                  : Padding(
-                      padding: EdgeInsets.only(right: widthRatio * 225),
-                      child: Container(
-                          width: 165,
-                          child: ButtonTheme(
-                              padding: EdgeInsets.only(left: 30),
-                              minWidth: widthRatio * 80,
-                              height: 35,
-                              disabledColor: Color.fromARGB(255, 255, 0, 1),
-                              child: RaisedButton(
-                                  onPressed: isButtonClicked
-                                      ? null
-                                      : () {
-                                          this.stopWatchPrint();
-                                          this.buttonClicked();
-                                        },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 100,
-                                        child: Text('Even / Consonant',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 20)),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 00),
-                                      ),
-                                      Icon(
-                                        IconData(58847,
-                                            fontFamily: 'MaterialIcons',
-                                            matchTextDirection: true),
-                                        size: 35,
-                                      )
-                                    ],
-                                  )))),
-                    ),
-            ],
+        Column(children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                isButtonClicked
+                    ? Container()
+                    : Padding(
+                        padding: EdgeInsets.only(left: widthRatio * 225),
+                        child: Container(
+                            width: 165,
+                            child: ButtonTheme(
+                                padding: EdgeInsets.only(right: 30),
+                                minWidth: widthRatio * 80,
+                                height: 35,
+                                disabledColor: Color.fromARGB(255, 255, 0, 1),
+                                child: RaisedButton(
+                                    onPressed: isButtonClicked
+                                        ? null
+                                        : () {
+                                            this.stopWatchPrint();
+                                            this.buttonClicked(true);
+                                          },
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        Icon(
+                                          IconData(58846,
+                                              fontFamily: 'MaterialIcons',
+                                              matchTextDirection: true),
+                                          size: 35,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 00),
+                                        ),
+                                        Container(
+                                          width: 100,
+                                          child: Text('Odd / Vowel',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 20)),
+                                        ),
+                                      ],
+                                    ))))),
+                this.cueAndStimulus(),
+                isButtonClicked
+                    ? Container()
+                    : Padding(
+                        padding: EdgeInsets.only(right: widthRatio * 225),
+                        child: Container(
+                            width: 165,
+                            child: ButtonTheme(
+                                padding: EdgeInsets.only(left: 30),
+                                minWidth: widthRatio * 80,
+                                height: 35,
+                                disabledColor: Color.fromARGB(255, 255, 0, 1),
+                                child: RaisedButton(
+                                    onPressed: isButtonClicked
+                                        ? null
+                                        : () {
+                                            this.stopWatchPrint();
+                                            this.buttonClicked(false);
+                                          },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          width: 100,
+                                          child: Text('Even / Consonant',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 20)),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 00),
+                                        ),
+                                        Icon(
+                                          IconData(58847,
+                                              fontFamily: 'MaterialIcons',
+                                              matchTextDirection: true),
+                                          size: 35,
+                                        )
+                                      ],
+                                    )))),
+                      ),
+              ],
+            ),
           ),
-        )
+          Padding(
+              padding: EdgeInsets.only(bottom: heightRatio * 500),
+              child: isButtonClicked
+                  ? Column(children: <Widget>[Text(""), Text("")])
+                  : Column(children: <Widget>[
+                      Text(
+                          "This is a ${numberLetter[currentLevel - 1].type.toUpperCase()} task. The pair above contains a ${letterNumber()}."),
+                      Text(
+                          "Press the ${numberLetter[currentLevel - 1].isOddOrVowl ? "LEFT" : "RIGHT"} key or button.")
+                    ]))
+        ])
       ],
     ));
   }

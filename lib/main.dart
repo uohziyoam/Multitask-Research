@@ -1,8 +1,24 @@
 import 'dart:async';
+import 'package:MultitaskResearch/KEYS.dart';
 import 'package:MultitaskResearch/instruction.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase/firebase.dart' as Firebase;
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  if (Firebase.apps.isEmpty) {
+    Firebase.initializeApp(
+        apiKey: KEYS.apiKey,
+        authDomain: KEYS.authDomain,
+        databaseURL: KEYS.databaseURL,
+        projectId: KEYS.projectId,
+        storageBucket: KEYS.storageBucket,
+        messagingSenderId: KEYS.messagingSenderId,
+        appId: KEYS.appId,
+        measurementId: KEYS.measurementId);
+  }
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -29,8 +45,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    var widthRatio = MediaQuery.of(context).size.width / 768;
-    var heightRatio = MediaQuery.of(context).size.height / 1024;
-    return Scaffold(body: Instruction(isInstruction: true));
+    return Scaffold(
+      body: Instruction(isInstruction: true),
+    );
   }
 }
