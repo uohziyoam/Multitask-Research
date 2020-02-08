@@ -176,49 +176,51 @@ class _TestState extends State<Test> {
         Text("$currentLevel"),
         Padding(
           padding: EdgeInsets.only(top: heightRatio * 300),
-          child: isButtonClicked
-              ? Container()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.only(left: widthRatio * 225),
-                        child: Container(
-                            width: 165,
-                            child: ButtonTheme(
-                                padding: EdgeInsets.only(right: 30),
-                                minWidth: widthRatio * 80,
-                                height: 35,
-                                disabledColor: Color.fromARGB(255, 255, 0, 1),
-                                child: RaisedButton(
-                                    onPressed: isButtonClicked
-                                        ? null
-                                        : () {
-                                            this.stopWatchPrint();
-                                            this.buttonClicked();
-                                          },
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: <Widget>[
-                                        Icon(
-                                          IconData(58846,
-                                              fontFamily: 'MaterialIcons',
-                                              matchTextDirection: true),
-                                          size: 35,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 00),
-                                        ),
-                                        Container(
-                                          width: 100,
-                                          child: Text('Odd / Vowel',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 20)),
-                                        ),
-                                      ],
-                                    ))))),
-                    this.cueAndStimulus(),
-                    Padding(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              isButtonClicked
+                  ? Container()
+                  : Padding(
+                      padding: EdgeInsets.only(left: widthRatio * 225),
+                      child: Container(
+                          width: 165,
+                          child: ButtonTheme(
+                              padding: EdgeInsets.only(right: 30),
+                              minWidth: widthRatio * 80,
+                              height: 35,
+                              disabledColor: Color.fromARGB(255, 255, 0, 1),
+                              child: RaisedButton(
+                                  onPressed: isButtonClicked
+                                      ? null
+                                      : () {
+                                          this.stopWatchPrint();
+                                          this.buttonClicked();
+                                        },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Icon(
+                                        IconData(58846,
+                                            fontFamily: 'MaterialIcons',
+                                            matchTextDirection: true),
+                                        size: 35,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 00),
+                                      ),
+                                      Container(
+                                        width: 100,
+                                        child: Text('Odd / Vowel',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 20)),
+                                      ),
+                                    ],
+                                  ))))),
+              this.cueAndStimulus(),
+              isButtonClicked
+                  ? Container()
+                  : Padding(
                       padding: EdgeInsets.only(right: widthRatio * 225),
                       child: Container(
                           width: 165,
@@ -255,8 +257,8 @@ class _TestState extends State<Test> {
                                     ],
                                   )))),
                     ),
-                  ],
-                ),
+            ],
+          ),
         )
       ],
     ));
