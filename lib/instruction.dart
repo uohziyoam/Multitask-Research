@@ -183,7 +183,8 @@ class _InstructionState extends State<Instruction> {
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Login()));
+                                            builder: (context) =>
+                                                Test(isUnscored: true)));
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,

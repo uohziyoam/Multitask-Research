@@ -93,12 +93,14 @@ class _LoginState extends State<Login> {
 
   void _loginPressed() {
     print('The user wants to login with $_id');
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Test(
-                  isUnscored: true,
-                  id: _id,
-                )));
+    if (_id.isNotEmpty) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Test(
+                    isUnscored: false,
+                    id: _id,
+                  )));
+    }
   }
 }

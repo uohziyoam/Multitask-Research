@@ -33,7 +33,7 @@ class _InstructionDescriptionState extends State<InstructionDescription> {
       Container(
         margin: EdgeInsets.only(bottom: heightRatio * 10),
         width: widthRatio * 300,
-        height: widthRatio * 60,
+        height: widthRatio * 80,
         child: Text(
           instruction[currentStep - 1],
           style: TextStyle(fontSize: 15),
