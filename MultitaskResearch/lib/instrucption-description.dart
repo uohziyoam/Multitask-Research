@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class InstructionDescription extends StatefulWidget {
-  int instructionStep;
-  InstructionDescription({Key key, @required this.instructionStep})
-      : super(key: key);
+  Function setStep;
+  InstructionDescription({Key key, @required this.setStep}) : super(key: key);
 
   @override
   _InstructionDescriptionState createState() => _InstructionDescriptionState();
@@ -34,7 +33,7 @@ class _InstructionDescriptionState extends State<InstructionDescription> {
       Container(
         margin: EdgeInsets.only(bottom: heightRatio * 10),
         width: widthRatio * 300,
-        height: widthRatio * 50,
+        height: widthRatio * 80,
         child: Text(
           instruction[currentStep - 1],
           style: TextStyle(fontSize: 15),
@@ -62,18 +61,19 @@ class _InstructionDescriptionState extends State<InstructionDescription> {
                     height: 35,
                     disabledColor: Color.fromARGB(255, 255, 0, 1),
                     child: RaisedButton(
-                      onPressed: () {
-                        setState(() {
-                          if (currentStep == 1) {}
-                          if (currentStep == 2) {
-                            currentStep -= 1;
-                          }
-                          if (currentStep == 3) {
-                            currentStep -= 1;
-                          }
-                          widget.instructionStep = currentStep;
-                        });
-                      },
+                      onPressed: currentStep == 1
+                          ? null
+                          : () {
+                              setState(() {
+                                if (currentStep == 1) {
+                                } else if (currentStep == 2) {
+                                  currentStep -= 1;
+                                } else if (currentStep == 3) {
+                                  currentStep -= 1;
+                                }
+                                widget.setStep(currentStep);
+                              });
+                            },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -101,18 +101,18 @@ class _InstructionDescriptionState extends State<InstructionDescription> {
                       height: 35,
                       disabledColor: Color.fromARGB(255, 255, 0, 1),
                       child: RaisedButton(
-                          onPressed: () {
-                            setState(() {
-                              if (currentStep == 1) {
-                                currentStep += 1;
-                              }
-                              if (currentStep == 2) {
-                                currentStep += 1;
-                              }
-                              if (currentStep == 3) {}
-                              widget.instructionStep = currentStep;
-                            });
-                          },
+                          onPressed: currentStep == 3
+                              ? null
+                              : () {
+                                  setState(() {
+                                    if (currentStep == 1) {
+                                      currentStep += 1;
+                                    } else if (currentStep == 2) {
+                                      currentStep += 1;
+                                    } else if (currentStep == 3) {}
+                                    widget.setStep(currentStep);
+                                  });
+                                },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
