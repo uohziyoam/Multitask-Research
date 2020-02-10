@@ -3,7 +3,7 @@ import 'package:MultitaskResearch/test.dart';
 
 class RandomAlgorithm {
   static final List<String> vowels = ["a", "e", "i", "u"];
-  static final List<String> consonants = ["p", "k", "n", "g"];
+  static final List<String> consonants = ["p", "k", "n", "s"];
   static final List<String> even = ["2", "4", "6", "8"];
   static final List<String> odd = ["3", "5", "7", "9"];
   List<CueStimulus> config = [];

@@ -336,11 +336,9 @@ class _TestState extends State<Test> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    LinearProgressIndicator(
-                      value: widget.isUnscored
-                          ? currentLevel / 6
-                          : currentLevel / totalLevels,
-                    ),
+                    widget.isUnscored
+                        ? LinearProgressIndicator(value: currentLevel / 6)
+                        : Container(),
                   ],
                 ),
                 Column(children: <Widget>[

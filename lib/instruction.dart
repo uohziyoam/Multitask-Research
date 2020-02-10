@@ -82,7 +82,10 @@ class _InstructionState extends State<Instruction> {
   Widget cueAndStimulus() {
     if (isCue) {
       return Container(
-          margin: EdgeInsets.only(top: heightRatio * 10),
+          width: 500,
+          alignment: Alignment(0.0, 0.0),
+          height: 150,
+          margin: EdgeInsets.only(top: 10),
           child: Text(
             "${numberLetter[currentLevel - 1].type}",
             style: TextStyle(fontSize: 80, color: Colors.grey),
@@ -91,7 +94,10 @@ class _InstructionState extends State<Instruction> {
 
     if (isStimulus) {
       return Container(
-          margin: EdgeInsets.only(top: heightRatio * 10),
+          width: 500,
+          alignment: Alignment(0.0, 0.0),
+          height: 150,
+          margin: EdgeInsets.only(top: 10),
           child: Text(
             "${numberLetter[currentLevel - 1].stimulus}",
             style: TextStyle(fontSize: 120),
@@ -99,7 +105,10 @@ class _InstructionState extends State<Instruction> {
     }
 
     return Container(
-        margin: EdgeInsets.only(top: heightRatio * 10),
+        width: 500,
+        alignment: Alignment(0.0, 0.0),
+        height: 150,
+        margin: EdgeInsets.only(top: 10),
         child: Text(
           "a3",
           style: TextStyle(fontSize: 120),
@@ -156,7 +165,7 @@ class _InstructionState extends State<Instruction> {
                 Column(
                   children: <Widget>[
                     Container(
-                      width: widthRatio * 768,
+                      width: 768,
                       height: 20,
                       color: Colors.red,
                       child: Text(
