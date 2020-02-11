@@ -82,7 +82,7 @@ class _InstructionState extends State<Instruction> {
   Widget cueAndStimulus() {
     if (isCue) {
       return Container(
-          width: 500,
+          width: 350,
           alignment: Alignment(0.0, 0.0),
           height: 150,
           margin: EdgeInsets.only(top: 10),
@@ -94,7 +94,7 @@ class _InstructionState extends State<Instruction> {
 
     if (isStimulus) {
       return Container(
-          width: 500,
+          width: 350,
           alignment: Alignment(0.0, 0.0),
           height: 150,
           margin: EdgeInsets.only(top: 10),
@@ -105,7 +105,7 @@ class _InstructionState extends State<Instruction> {
     }
 
     return Container(
-        width: 500,
+        width: 350,
         alignment: Alignment(0.0, 0.0),
         height: 150,
         margin: EdgeInsets.only(top: 10),
@@ -159,162 +159,208 @@ class _InstructionState extends State<Instruction> {
                 }
               });
             },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <
+                Widget>[
+              Container(
+                alignment: AlignmentDirectional.center,
+                width: 700,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color.fromARGB(255, 204, 204, 204)),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      width: 768,
-                      height: 20,
-                      color: Colors.red,
-                      child: Text(
-                        "Instructions $instructionStep of 3",
-                        textAlign: TextAlign.center,
-                      ),
+                        margin: EdgeInsets.only(top: 5),
+                        width: 658,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Color.fromARGB(255, 204, 204, 204)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              height: 20,
+                              color: Color.fromARGB(255, 240, 244, 244),
+                              child: Text(
+                                "Instructions $instructionStep of 3",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 18, 18, 18),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            LinearProgressIndicator(
+                              value: instructionStep / 3,
+                            ),
+                          ],
+                        )),
+                    Padding(
+                      padding: EdgeInsets.only(top: heightRatio * 300),
+                      child: instructionStep == 3
+                          ? Container(
+                              width: 165,
+                              padding: EdgeInsets.only(bottom: 112),
+                              child: ButtonTheme(
+                                  minWidth: widthRatio * 100,
+                                  height: 35,
+                                  disabledColor: Color.fromARGB(255, 255, 0, 1),
+                                  child: RaisedButton(
+                                      elevation: 0,
+                                      focusElevation: 0,
+                                      hoverElevation: 0,
+                                      disabledElevation: 0,
+                                      highlightElevation: 0,
+                                      color: Color.fromARGB(255, 0, 66, 118),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(2.0),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Test(isUnscored: true)));
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text('Start the Test',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white)),
+                                        ],
+                                      ))))
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                instructionStep == 1
+                                    ? Container()
+                                    : ButtonTheme(
+                                        padding: EdgeInsets.only(right: 30),
+                                        // buttonColor: isLeftButtonClicked
+                                        //     ? Colors.red
+                                        //     : null,
+                                        minWidth: 120,
+                                        height: 35,
+                                        disabledColor:
+                                            Color.fromARGB(255, 247, 247, 247),
+                                        child: RaisedButton(
+                                            elevation: 0,
+                                            focusElevation: 0,
+                                            hoverElevation: 0,
+                                            disabledElevation: 0,
+                                            highlightElevation: 0,
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255),
+                                            textColor: Color.fromARGB(
+                                                255, 89, 132, 166),
+                                            shape: RoundedRectangleBorder(
+                                                side: BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 153, 153, 153))),
+                                            onHighlightChanged: (value) {
+                                              setState(() {
+                                                isLeftButtonClicked = value;
+                                              });
+                                            },
+                                            onPressed: () {},
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: <Widget>[
+                                                Icon(
+                                                  IconData(58846,
+                                                      fontFamily:
+                                                          'MaterialIcons',
+                                                      matchTextDirection: true),
+                                                  size: 35,
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: 00),
+                                                ),
+                                                Container(
+                                                  width: 100,
+                                                  child: Text('Odd / Vowel',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontSize: 20)),
+                                                ),
+                                              ],
+                                            ))),
+                                this.cueAndStimulus(),
+                                instructionStep == 1
+                                    ? Container()
+                                    : ButtonTheme(
+                                        padding: EdgeInsets.only(left: 30),
+                                        minWidth: 120,
+                                        // buttonColor: isRightButtonClicked
+                                        //     ? Colors.red
+                                        //     : null,
+                                        height: 35,
+                                        disabledColor:
+                                            Color.fromARGB(255, 247, 247, 247),
+                                        child: RaisedButton(
+                                            // onHighlightChanged: (value) {
+                                            //   setState(() {
+                                            //     isRightButtonClicked =
+                                            //         value;
+                                            //   });
+                                            // },
+                                            elevation: 0,
+                                            focusElevation: 0,
+                                            hoverElevation: 0,
+                                            disabledElevation: 0,
+                                            highlightElevation: 0,
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255),
+                                            textColor: Color.fromARGB(
+                                                255, 89, 132, 166),
+                                            shape: RoundedRectangleBorder(
+                                                side: BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 153, 153, 153))),
+                                            onPressed: () {},
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                Container(
+                                                  width: 100,
+                                                  child: Text(
+                                                      'Even / Consonant',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontSize: 20)),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(left: 00),
+                                                ),
+                                                Icon(
+                                                  IconData(58847,
+                                                      fontFamily:
+                                                          'MaterialIcons',
+                                                      matchTextDirection: true),
+                                                  size: 35,
+                                                )
+                                              ],
+                                            ))),
+                              ],
+                            ),
                     ),
-                    LinearProgressIndicator(
-                      value: instructionStep / 3,
-                    ),
+                    InstructionDescription(
+                      setStep: setStep,
+                    )
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: heightRatio * 300),
-                  child: instructionStep == 3
-                      ? Container(
-                          width: 165,
-                          child: ButtonTheme(
-                              minWidth: widthRatio * 100,
-                              height: 35,
-                              disabledColor: Color.fromARGB(255, 255, 0, 1),
-                              child: RaisedButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Test(isUnscored: true)));
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text('Start the Test',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontSize: 20)),
-                                    ],
-                                  ))))
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            instructionStep == 1
-                                ? Container()
-                                : Padding(
-                                    padding:
-                                        EdgeInsets.only(left: widthRatio * 225),
-                                    child: Container(
-                                        width: 165,
-                                        child: ButtonTheme(
-                                            padding: EdgeInsets.only(right: 30),
-                                            // buttonColor: isLeftButtonClicked
-                                            //     ? Colors.red
-                                            //     : null,
-                                            minWidth: widthRatio * 80,
-                                            height: 35,
-                                            disabledColor:
-                                                Color.fromARGB(255, 255, 0, 1),
-                                            child: RaisedButton(
-                                                onHighlightChanged: (value) {
-                                                  setState(() {
-                                                    isLeftButtonClicked = value;
-                                                  });
-                                                },
-                                                onPressed: () {},
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: <Widget>[
-                                                    Icon(
-                                                      IconData(58846,
-                                                          fontFamily:
-                                                              'MaterialIcons',
-                                                          matchTextDirection:
-                                                              true),
-                                                      size: 35,
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          right: 00),
-                                                    ),
-                                                    Container(
-                                                      width: 100,
-                                                      child: Text('Odd / Vowel',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                              fontSize: 20)),
-                                                    ),
-                                                  ],
-                                                ))))),
-                            this.cueAndStimulus(),
-                            instructionStep == 1
-                                ? Container()
-                                : Padding(
-                                    padding: EdgeInsets.only(
-                                        right: widthRatio * 225),
-                                    child: Container(
-                                        width: 165,
-                                        child: ButtonTheme(
-                                            padding: EdgeInsets.only(left: 30),
-                                            minWidth: widthRatio * 80,
-                                            // buttonColor: isRightButtonClicked
-                                            //     ? Colors.red
-                                            //     : null,
-                                            height: 35,
-                                            disabledColor:
-                                                Color.fromARGB(255, 255, 0, 1),
-                                            child: RaisedButton(
-                                                // onHighlightChanged: (value) {
-                                                //   setState(() {
-                                                //     isRightButtonClicked =
-                                                //         value;
-                                                //   });
-                                                // },
-                                                onPressed: () {},
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Container(
-                                                      width: 100,
-                                                      child: Text(
-                                                          'Even / Consonant',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                              fontSize: 20)),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 00),
-                                                    ),
-                                                    Icon(
-                                                      IconData(58847,
-                                                          fontFamily:
-                                                              'MaterialIcons',
-                                                          matchTextDirection:
-                                                              true),
-                                                      size: 35,
-                                                    )
-                                                  ],
-                                                )))),
-                                  ),
-                          ],
-                        ),
-                ),
-                InstructionDescription(
-                  setStep: setStep,
-                )
-              ],
-            )));
+              )
+            ])));
   }
 }

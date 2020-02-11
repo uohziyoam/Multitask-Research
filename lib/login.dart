@@ -40,22 +40,24 @@ class _LoginState extends State<Login> {
     widthRatio = MediaQuery.of(context).size.width / 768;
     heightRatio = MediaQuery.of(context).size.height / 1024;
     return new Scaffold(
-      body: new Container(
-        padding: EdgeInsets.only(left: 450, right: 450),
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+      body: new Row(mainAxisAlignment: MainAxisAlignment.center,
+          // padding: EdgeInsets.only(left: 450, right: 450),
           children: <Widget>[
-            _buildTextFields(),
-            _buildButtons(),
-          ],
-        ),
-      ),
+            new Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                _buildTextFields(),
+                _buildButtons(),
+              ],
+            ),
+          ]),
     );
   }
 
   Widget _buildTextFields() {
     return new Container(
       padding: EdgeInsets.only(top: 300 * heightRatio),
+      width: 300,
       child: new Column(
         children: <Widget>[
           new Container(
@@ -76,11 +78,12 @@ class _LoginState extends State<Login> {
       child: new Column(
         children: <Widget>[
           ButtonTheme(
-            minWidth: widthRatio * 80,
+            minWidth: 120,
             height: 35,
             disabledColor: Color.fromARGB(255, 255, 0, 1),
             child: RaisedButton(
-              child: new Text('Go!'),
+              child: new Text('Go!',
+                  style: TextStyle(fontSize: 15, color: Colors.white)),
               onPressed: _loginPressed,
             ),
           )
