@@ -206,9 +206,9 @@ class _InstructionState extends State<Instruction> {
                                         width: 165,
                                         child: ButtonTheme(
                                             padding: EdgeInsets.only(right: 30),
-                                            buttonColor: isLeftButtonClicked
-                                                ? Colors.red
-                                                : null,
+                                            // buttonColor: isLeftButtonClicked
+                                            //     ? Colors.red
+                                            //     : null,
                                             minWidth: widthRatio * 80,
                                             height: 35,
                                             disabledColor:
@@ -257,19 +257,19 @@ class _InstructionState extends State<Instruction> {
                                         child: ButtonTheme(
                                             padding: EdgeInsets.only(left: 30),
                                             minWidth: widthRatio * 80,
-                                            buttonColor: isRightButtonClicked
-                                                ? Colors.red
-                                                : null,
+                                            // buttonColor: isRightButtonClicked
+                                            //     ? Colors.red
+                                            //     : null,
                                             height: 35,
                                             disabledColor:
                                                 Color.fromARGB(255, 255, 0, 1),
                                             child: RaisedButton(
-                                                onHighlightChanged: (value) {
-                                                  setState(() {
-                                                    isRightButtonClicked =
-                                                        value;
-                                                  });
-                                                },
+                                                // onHighlightChanged: (value) {
+                                                //   setState(() {
+                                                //     isRightButtonClicked =
+                                                //         value;
+                                                //   });
+                                                // },
                                                 onPressed: () {},
                                                 child: Row(
                                                   mainAxisAlignment:

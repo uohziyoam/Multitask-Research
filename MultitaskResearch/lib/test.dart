@@ -360,9 +360,9 @@ class _TestState extends State<Test> {
                                         padding: EdgeInsets.only(right: 30),
                                         minWidth: widthRatio * 80,
                                         height: 35,
-                                        buttonColor: isLeftButtonClicked
-                                            ? Colors.red
-                                            : null,
+                                        // buttonColor: isLeftButtonClicked
+                                        //     ? Colors.red
+                                        //     : null,
                                         disabledColor:
                                             Color.fromARGB(255, 255, 0, 1),
                                         child: RaisedButton(
@@ -409,9 +409,9 @@ class _TestState extends State<Test> {
                                         padding: EdgeInsets.only(left: 30),
                                         minWidth: widthRatio * 80,
                                         height: 35,
-                                        buttonColor: isRightButtonClicked
-                                            ? Colors.red
-                                            : null,
+                                        // buttonColor: isRightButtonClicked
+                                        //     ? Colors.red
+                                        //     : null,
                                         disabledColor:
                                             Color.fromARGB(255, 255, 0, 1),
                                         child: RaisedButton(
