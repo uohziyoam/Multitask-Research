@@ -17,7 +17,16 @@ class RandomAlgorithm {
   generateConsecutiveTask(int numberOfTasks, String taskType) {
     String task = "";
 
-    bool isOddOrVowl = random.nextBool();
+    List<bool> listOfIsOddOrVowl = [];
+
+    for (var i = 0; i < numberOfTasks; i++) {
+      if (taskType == "LETTER") {
+        listOfIsOddOrVowl.add(i.isEven ? true : false);
+      } else {
+        listOfIsOddOrVowl.add(i.isEven ? false : true);
+      }
+    }
+
     bool isSwitchedTask = true;
 
     for (int i = 0; i < numberOfTasks; i++) {
@@ -29,13 +38,13 @@ class RandomAlgorithm {
       }
 
       if (taskType == "NUMBER") {
-        task = isOddOrVowl
+        task = listOfIsOddOrVowl[i]
             ? letter[letterNextRandom] + odd[numberNextRandom]
             : letter[letterNextRandom] + even[numberNextRandom];
       }
 
       if (taskType == "LETTER") {
-        task = isOddOrVowl
+        task = listOfIsOddOrVowl[i]
             ? vowels[letterNextRandom] + number[numberNextRandom]
             : consonants[letterNextRandom] + number[numberNextRandom];
       }
@@ -46,7 +55,7 @@ class RandomAlgorithm {
       }
 
       config.add(CueStimulus(
-          isOddOrVowl: isOddOrVowl,
+          isOddOrVowl: listOfIsOddOrVowl[i],
           stimulus: task,
           type: taskType,
           isSwitchedTask: isSwitchedTask,
