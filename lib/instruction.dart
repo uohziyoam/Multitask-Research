@@ -23,9 +23,12 @@ class _InstructionState extends State<Instruction> {
       isStimulus = false,
       isLeftButtonClicked = false,
       isRightButtonClicked = false;
-  int currentLevel = 1, totalLevels = 999, instructionStep = 1;
+  int currentLevel = 1, instructionStep = 2;
 
   List<CueStimulus> numberLetter;
+
+  Color iconColorRight = Color.fromARGB(255, 112, 112, 112);
+  Color iconColorLeft = Color.fromARGB(255, 112, 112, 112);
 
   @override
   void initState() {
@@ -33,7 +36,6 @@ class _InstructionState extends State<Instruction> {
     buttonClicked();
     loadGameData(widget.isInstruction).then((s) => setState(() {
           numberLetter = s.list;
-          totalLevels = s.list.length;
         }));
   }
 
@@ -80,6 +82,18 @@ class _InstructionState extends State<Instruction> {
   }
 
   Widget cueAndStimulus() {
+    if (instructionStep == 2) {
+      return Container(
+          width: 350,
+          alignment: Alignment(0.0, 0.0),
+          height: 150,
+          margin: EdgeInsets.only(top: 10),
+          child: Text(
+            "a6",
+            style: TextStyle(fontSize: 120),
+          ));
+    }
+
     if (isCue) {
       return Container(
           width: 350,
@@ -196,7 +210,7 @@ class _InstructionState extends State<Instruction> {
                           ],
                         )),
                     Padding(
-                      padding: EdgeInsets.only(top: heightRatio * 300),
+                      padding: EdgeInsets.only(top: heightRatio * 250),
                       child: instructionStep == 3
                           ? Container(
                               width: 165,
@@ -239,122 +253,163 @@ class _InstructionState extends State<Instruction> {
                               children: <Widget>[
                                 instructionStep == 1
                                     ? Container()
-                                    : ButtonTheme(
-                                        padding: EdgeInsets.only(right: 30),
-                                        // buttonColor: isLeftButtonClicked
-                                        //     ? Colors.red
-                                        //     : null,
-                                        minWidth: 120,
-                                        height: 35,
-                                        disabledColor:
-                                            Color.fromARGB(255, 247, 247, 247),
-                                        child: RaisedButton(
-                                            elevation: 0,
-                                            focusElevation: 0,
-                                            hoverElevation: 0,
-                                            disabledElevation: 0,
-                                            highlightElevation: 0,
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            textColor: Color.fromARGB(
-                                                255, 89, 132, 166),
-                                            shape: RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 153, 153, 153))),
-                                            onHighlightChanged: (value) {
-                                              setState(() {
-                                                isLeftButtonClicked = value;
-                                              });
-                                            },
-                                            onPressed: () {},
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: <Widget>[
-                                                Icon(
-                                                  IconData(58846,
-                                                      fontFamily:
-                                                          'MaterialIcons',
-                                                      matchTextDirection: true),
-                                                  size: 35,
+                                    : MouseRegion(
+                                        onEnter: (event) => setState(() {
+                                          iconColorLeft =
+                                              Color.fromARGB(255, 5, 5, 5);
+                                        }),
+                                        onExit: (event) => setState(() {
+                                          iconColorLeft = Color.fromARGB(
+                                              255, 112, 112, 112);
+                                        }),
+                                        child: GestureDetector(
+                                            child: Container(
+                                                width: 160,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Color.fromARGB(
+                                                          255, 153, 153, 153)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          1.0),
+                                                  color: isLeftButtonClicked
+                                                      ? Color.fromARGB(
+                                                          255, 158, 0, 0)
+                                                      : null,
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: 00),
-                                                ),
-                                                Container(
-                                                  width: 100,
-                                                  child: Text('Odd / Vowel',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 20)),
-                                                ),
-                                              ],
-                                            ))),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: <Widget>[
+                                                    Icon(
+                                                      IconData(58846,
+                                                          fontFamily:
+                                                              'MaterialIcons',
+                                                          matchTextDirection:
+                                                              true),
+                                                      size: 35,
+                                                      color: isLeftButtonClicked
+                                                          ? Color.fromARGB(
+                                                              255, 158, 0, 0)
+                                                          : iconColorLeft,
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 0),
+                                                    ),
+                                                    Container(
+                                                      width: 100,
+                                                      child: Text('Odd / Vowel',
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color: isLeftButtonClicked
+                                                                  ? Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          158,
+                                                                          0,
+                                                                          0)
+                                                                  : Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          89,
+                                                                          132,
+                                                                          166))),
+                                                    ),
+                                                  ],
+                                                ))),
+                                      ),
                                 this.cueAndStimulus(),
                                 instructionStep == 1
                                     ? Container()
-                                    : ButtonTheme(
-                                        padding: EdgeInsets.only(left: 30),
-                                        minWidth: 120,
-                                        // buttonColor: isRightButtonClicked
-                                        //     ? Colors.red
-                                        //     : null,
-                                        height: 35,
-                                        disabledColor:
-                                            Color.fromARGB(255, 247, 247, 247),
-                                        child: RaisedButton(
-                                            // onHighlightChanged: (value) {
-                                            //   setState(() {
-                                            //     isRightButtonClicked =
-                                            //         value;
-                                            //   });
-                                            // },
-                                            elevation: 0,
-                                            focusElevation: 0,
-                                            hoverElevation: 0,
-                                            disabledElevation: 0,
-                                            highlightElevation: 0,
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            textColor: Color.fromARGB(
-                                                255, 89, 132, 166),
-                                            shape: RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 153, 153, 153))),
-                                            onPressed: () {},
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: <Widget>[
-                                                Container(
-                                                  width: 100,
-                                                  child: Text(
-                                                      'Even / Consonant',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 20)),
+                                    : MouseRegion(
+                                        onEnter: (event) => setState(() {
+                                          iconColorRight =
+                                              Color.fromARGB(255, 5, 5, 5);
+                                        }),
+                                        onExit: (event) => setState(() {
+                                          iconColorRight = Color.fromARGB(
+                                              255, 112, 112, 112);
+                                        }),
+                                        child: GestureDetector(
+                                            child: Container(
+                                                width: 160,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Color.fromARGB(
+                                                          255, 153, 153, 153)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          1.0),
+                                                  color: isRightButtonClicked
+                                                      ? Color.fromARGB(
+                                                          255, 158, 0, 0)
+                                                      : null,
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      EdgeInsets.only(left: 00),
-                                                ),
-                                                Icon(
-                                                  IconData(58847,
-                                                      fontFamily:
-                                                          'MaterialIcons',
-                                                      matchTextDirection: true),
-                                                  size: 35,
-                                                )
-                                              ],
-                                            ))),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 0),
+                                                    ),
+                                                    Container(
+                                                      width: 100,
+                                                      child: Text(
+                                                          'Even / Consonant',
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color: isRightButtonClicked
+                                                                  ? Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          158,
+                                                                          0,
+                                                                          0)
+                                                                  : Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          89,
+                                                                          132,
+                                                                          166))),
+                                                    ),
+                                                    Icon(
+                                                      IconData(58847,
+                                                          fontFamily:
+                                                              'MaterialIcons',
+                                                          matchTextDirection:
+                                                              true),
+                                                      size: 35,
+                                                      color:
+                                                          isRightButtonClicked
+                                                              ? Color.fromARGB(
+                                                                  255,
+                                                                  158,
+                                                                  0,
+                                                                  0)
+                                                              : iconColorRight,
+                                                    ),
+                                                  ],
+                                                ))),
+                                      )
                               ],
                             ),
                     ),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 50),
+                        child: Column(children: <Widget>[
+                          instructionStep == 2
+                              ? Text(
+                                  "In this example, we have a vowel and an even number.")
+                              : Text("")
+                        ])),
                     InstructionDescription(
                       setStep: setStep,
                     )

@@ -84,7 +84,7 @@ Future<ListOfCueStimulus> loadGameData(isInstruction) async {
 }
 
 Future<List<CueStimulus>> loadData(isInstruction) async {
-  return execuate();
+  return isInstruction ? loadGameData(isInstruction) : execuate();
 }
 
 List<CueStimulus> execuate() {
