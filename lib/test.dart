@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CueStimulus {
   String stimulus;
@@ -168,7 +169,8 @@ List<int> randomSequence(int maxInt) {
 class Test extends StatefulWidget {
   final bool isUnscored;
   final String id;
-  Test({Key key, @required this.isUnscored, this.id}) : super(key: key);
+  Test({Key key, @required this.isUnscored, @required this.id})
+      : super(key: key);
 
   @override
   _TestState createState() => _TestState();
@@ -176,7 +178,7 @@ class Test extends StatefulWidget {
 
 class _TestState extends State<Test> {
   final fs.Firestore firestore = fb.firestore();
-  Timer timer1, timer2;
+  Timer timer1, timer2, timer3, timer4, timer5;
   Stopwatch stopwatch;
   var widthRatio, heightRatio;
   bool isCue = false,
@@ -191,6 +193,8 @@ class _TestState extends State<Test> {
   List res = [];
 
   List<CueStimulus> numberLetter;
+  Color iconColorRight = Color.fromARGB(255, 112, 112, 112);
+  Color iconColorLeft = Color.fromARGB(255, 112, 112, 112);
 
   @override
   void initState() {
@@ -206,6 +210,8 @@ class _TestState extends State<Test> {
   void dispose() {
     timer1.cancel();
     timer2.cancel();
+    timer3.cancel();
+    timer5.cancel();
     stopwatch.stop();
     super.dispose();
   }
@@ -217,15 +223,15 @@ class _TestState extends State<Test> {
   }
 
   void wrapResult(bool isLeft) {
-    // print(stopwatch.elapsedMilliseconds);
     Map<String, dynamic> mp = {
       "switchingCost": stopwatch.elapsedMilliseconds,
       "isCorrect": numberLetter[currentLevel - 1].isOddOrVowl == isLeft,
       "isSwitchedTask": numberLetter[currentLevel - 1].isSwitchedTask,
-      "type": numberLetter[currentLevel - 1].type
+      "type": numberLetter[currentLevel - 1].type,
+      "stimulus": numberLetter[currentLevel - 1].stimulus
     };
 
-    print(numberLetter[currentLevel - 1].isOddOrVowl == isLeft);
+    // print(numberLetter[currentLevel - 1].isOddOrVowl == isLeft);
 
     res.add(mp);
   }
@@ -235,24 +241,33 @@ class _TestState extends State<Test> {
       // jump to new game
 
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => Test(
+                    isUnscored: false,
+                    id: widget.id,
+                  )));
       return true;
     }
 
-    if (currentLevel == 80 && !widget.isUnscored) {
+    if (!isEnd && currentLevel == 80 && !widget.isUnscored) {
       setState(() {
         isEnd = true;
       });
 
       // send to server
       List gameConfig = [];
+
+      DateTime now = DateTime.now();
+
       for (CueStimulus numLet in numberLetter) {
         gameConfig.add(numLet.stimulus);
       }
       Map<String, dynamic> mp = {
         "id": widget.id,
         "res": res,
-        "config": gameConfig
+        "test_time": now.toIso8601String()
+        // "config": gameConfig
       };
       firestore
           .collection('multitask')
@@ -282,18 +297,26 @@ class _TestState extends State<Test> {
     });
     stopwatch = new Stopwatch();
 
-    timer1 = new Timer(const Duration(milliseconds: 826), () {
+    timer1 = new Timer(
+        Duration(
+            milliseconds:
+                (widget.isUnscored && currentLevel == 1) ? 950 * 2 : 950), () {
       setState(() {
         isCue = true;
         isStimulus = false;
       });
-
-      timer2 = new Timer(const Duration(milliseconds: 950), () {
+      timer2 = new Timer(const Duration(milliseconds: 200), () {
         setState(() {
           isCue = false;
-          isStimulus = true;
-          isButtonClicked = false;
-          stopwatch.start();
+          isStimulus = false;
+        });
+        timer3 = new Timer(Duration(milliseconds: 226), () {
+          setState(() {
+            isCue = false;
+            isStimulus = true;
+            isButtonClicked = false;
+            stopwatch.start();
+          });
         });
       });
     });
@@ -355,29 +378,78 @@ class _TestState extends State<Test> {
         body: RawKeyboardListener(
             focusNode: focusNode,
             onKey: (value) {
-              bool isKeyUp =
-                  value.toDiagnosticsNode().toString().split("#").first ==
-                      "RawKeyUpEvent";
-
-              if (value.data.keyLabel == "ArrowLeft" && !isEnd) {
+              if (value.data.keyLabel == "ArrowLeft") {
                 setState(() {
-                  isLeftButtonClicked = !isKeyUp;
+                  isLeftButtonClicked = true;
+                  timer4 = Timer(const Duration(milliseconds: 200), () {
+                    setState(() {
+                      isLeftButtonClicked = false;
+                    });
+                    timer5 = new Timer(const Duration(milliseconds: 76), () {
+                      if (!isButtonClicked) {
+                        buttonClicked(true);
+                      }
+                    });
+                  });
                 });
-
-                if (!isButtonClicked) {
-                  buttonClicked(true);
-                }
               }
 
-              if (value.data.keyLabel == "ArrowRight" && !isEnd) {
+              if (value.data.keyLabel == "ArrowRight") {
                 setState(() {
-                  isRightButtonClicked = !isKeyUp;
+                  isRightButtonClicked = true;
+                  timer4 = Timer(const Duration(milliseconds: 200), () {
+                    setState(() {
+                      isRightButtonClicked = false;
+                    });
+                    timer5 = new Timer(const Duration(milliseconds: 76), () {
+                      if (!isButtonClicked) {
+                        buttonClicked(false);
+                      }
+                    });
+                  });
                 });
-
-                if (!isButtonClicked) {
-                  buttonClicked(false);
-                }
               }
+              // bool isKeyUp =
+              //     value.toDiagnosticsNode().toString().split("#").first ==
+              //         "RawKeyUpEvent";
+
+              // bool isKeyDown =
+              //     value.toDiagnosticsNode().toString().split("#").first ==
+              //         "RawKeyDownEvent";
+
+              // if (value.data.keyLabel == "ArrowLeft" && !isEnd) {
+              //   setState(() {
+              //     if (isKeyDown) {
+              //       isLeftButtonClicked = true;
+              //     }
+              //     if (isKeyUp) {
+              //       isLeftButtonClicked = false;
+              //     }
+              //   });
+
+              //   timer4 = new Timer(const Duration(milliseconds: 76), () {
+              //     if (!isButtonClicked) {
+              //       buttonClicked(true);
+              //     }
+              //   });
+              // }
+
+              // if (value.data.keyLabel == "ArrowRight" && !isEnd) {
+              //   setState(() {
+              //     if (isKeyDown) {
+              //       isRightButtonClicked = true;
+              //     }
+              //     if (isKeyUp) {
+              //       isRightButtonClicked = false;
+              //     }
+              //   });
+
+              //   timer4 = new Timer(const Duration(milliseconds: 76), () {
+              //     if (!isButtonClicked) {
+              //       buttonClicked(true);
+              //     }
+              //   });
+              // }
             },
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <
                 Widget>[
@@ -405,8 +477,8 @@ class _TestState extends State<Test> {
                                 color: Color.fromARGB(255, 240, 244, 244),
                                 child: Text(
                                   widget.isUnscored
-                                      ? "Instructions $currentLevel of 6"
-                                      : "Instructions $currentLevel of $totalLevels",
+                                      ? "Practice Task $currentLevel of 6"
+                                      : "Task $currentLevel of $totalLevels",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 18, 18, 18),
@@ -425,125 +497,208 @@ class _TestState extends State<Test> {
                           children: <Widget>[
                             isButtonClicked
                                 ? Container()
-                                : ButtonTheme(
-                                    padding: EdgeInsets.only(right: 30),
-                                    minWidth: 165,
-                                    height: 35,
-                                    // buttonColor: isLeftButtonClicked
-                                    //     ? Colors.red
-                                    //     : null,
-                                    disabledColor:
-                                        Color.fromARGB(255, 255, 0, 1),
-                                    child: RaisedButton(
-                                        elevation: 0,
-                                        focusElevation: 0,
-                                        hoverElevation: 0,
-                                        disabledElevation: 0,
-                                        highlightElevation: 0,
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        textColor:
-                                            Color.fromARGB(255, 89, 132, 166),
-                                        shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                color: Color.fromARGB(
-                                                    255, 153, 153, 153))),
-                                        onPressed: isButtonClicked
+                                : MouseRegion(
+                                    onEnter: (event) => setState(() {
+                                      iconColorLeft =
+                                          Color.fromARGB(255, 5, 5, 5);
+                                    }),
+                                    onExit: (event) => setState(() {
+                                      iconColorLeft =
+                                          Color.fromARGB(255, 112, 112, 112);
+                                    }),
+                                    child: GestureDetector(
+                                        onTapDown: (details) => setState(() {
+                                              isLeftButtonClicked = true;
+                                            }),
+                                        onTapUp: (details) => setState(() {
+                                              isLeftButtonClicked = false;
+                                            }),
+                                        onTap: isButtonClicked
                                             ? null
                                             : () {
                                                 this.stopWatchPrint();
                                                 this.buttonClicked(true);
                                               },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: <Widget>[
-                                            Icon(
-                                              IconData(58846,
-                                                  fontFamily: 'MaterialIcons',
-                                                  matchTextDirection: true),
-                                              size: 35,
+                                        child: Container(
+                                            height: 50,
+                                            width: 165,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Color.fromARGB(
+                                                      255, 153, 153, 153)),
+                                              borderRadius:
+                                                  BorderRadius.circular(1.0),
+                                              color: isLeftButtonClicked
+                                                  ? Color.fromARGB(
+                                                      255, 158, 0, 0)
+                                                  : null,
                                             ),
-                                            Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 00),
-                                            ),
-                                            Container(
-                                              width: 100,
-                                              child: Text('Odd / Vowel',
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      TextStyle(fontSize: 20)),
-                                            ),
-                                          ],
-                                        ))),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                Transform(
+                                                    alignment: Alignment.center,
+                                                    transform:
+                                                        Matrix4.rotationY(pi),
+                                                    child: Icon(
+                                                      MdiIcons.play,
+                                                      size: 35,
+                                                      color: isLeftButtonClicked
+                                                          ? Color.fromARGB(
+                                                              255, 158, 0, 0)
+                                                          : iconColorLeft,
+                                                    )),
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(right: 0),
+                                                ),
+                                                Container(
+                                                  width: 100,
+                                                  child: Text('Odd / Vowel',
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          color:
+                                                              isLeftButtonClicked
+                                                                  ? Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          158,
+                                                                          0,
+                                                                          0)
+                                                                  : Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          89,
+                                                                          132,
+                                                                          166))),
+                                                ),
+                                              ],
+                                            ))),
+                                  ),
                             this.cueAndStimulus(),
                             isButtonClicked
                                 ? Container()
-                                : ButtonTheme(
-                                    padding: EdgeInsets.only(left: 30),
-                                    minWidth: 165,
-                                    height: 35,
-                                    // buttonColor: isRightButtonClicked
-                                    //     ? Colors.red
-                                    //     : null,
-                                    disabledColor:
-                                        Color.fromARGB(255, 255, 0, 1),
-                                    child: RaisedButton(
-                                        elevation: 0,
-                                        focusElevation: 0,
-                                        hoverElevation: 0,
-                                        disabledElevation: 0,
-                                        highlightElevation: 0,
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        textColor:
-                                            Color.fromARGB(255, 89, 132, 166),
-                                        shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                color: Color.fromARGB(
-                                                    255, 153, 153, 153))),
-                                        onPressed: isButtonClicked
+                                : MouseRegion(
+                                    onEnter: (event) => setState(() {
+                                      iconColorRight =
+                                          Color.fromARGB(255, 5, 5, 5);
+                                    }),
+                                    onExit: (event) => setState(() {
+                                      iconColorRight =
+                                          Color.fromARGB(255, 112, 112, 112);
+                                    }),
+                                    child: GestureDetector(
+                                        onTapDown: (details) => setState(() {
+                                              isRightButtonClicked = true;
+                                            }),
+                                        onTapUp: (details) => setState(() {
+                                              isRightButtonClicked = false;
+                                            }),
+                                        onTap: isButtonClicked
                                             ? null
                                             : () {
                                                 this.stopWatchPrint();
                                                 this.buttonClicked(false);
                                               },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Container(
-                                              width: 100,
-                                              child: Text('Even / Consonant',
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      TextStyle(fontSize: 20)),
+                                        child: Container(
+                                            height: 50,
+                                            width: 165,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Color.fromARGB(
+                                                      255, 153, 153, 153)),
+                                              borderRadius:
+                                                  BorderRadius.circular(1.0),
+                                              color: isRightButtonClicked
+                                                  ? Color.fromARGB(
+                                                      255, 158, 0, 0)
+                                                  : null,
                                             ),
-                                            Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 00),
-                                            ),
-                                            Icon(
-                                              IconData(58847,
-                                                  fontFamily: 'MaterialIcons',
-                                                  matchTextDirection: true),
-                                              size: 35,
-                                            )
-                                          ],
-                                        )))
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(right: 0),
+                                                ),
+                                                Container(
+                                                  width: 100,
+                                                  child: Text(
+                                                      'Even / Consonant',
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          color:
+                                                              isRightButtonClicked
+                                                                  ? Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          158,
+                                                                          0,
+                                                                          0)
+                                                                  : Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          89,
+                                                                          132,
+                                                                          166))),
+                                                ),
+                                                Icon(
+                                                  MdiIcons.play,
+                                                  size: 35,
+                                                  color: isRightButtonClicked
+                                                      ? Color.fromARGB(
+                                                          255, 158, 0, 0)
+                                                      : iconColorRight,
+                                                ),
+                                              ],
+                                            ))),
+                                  )
                           ],
                         ),
-                        Padding(
-                            padding: EdgeInsets.only(bottom: heightRatio * 500),
-                            child: isButtonClicked
-                                ? Column(children: <Widget>[Text(""), Text("")])
-                                : Column(children: <Widget>[
-                                    Text(
-                                        "This is a ${numberLetter[currentLevel - 1].type.toUpperCase()} task. The pair above contains a ${letterNumber()}."),
-                                    Text(
-                                        "Press the ${numberLetter[currentLevel - 1].isOddOrVowl ? "LEFT" : "RIGHT"} key or button.")
-                                  ]))
+                        widget.isUnscored
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                    top: 50, bottom: heightRatio * 500),
+                                child: isButtonClicked
+                                    ? Column(
+                                        children: <Widget>[Text(""), Text("")])
+                                    : Column(children: <Widget>[
+                                        Text(
+                                            "This is a ${numberLetter[currentLevel - 1].type.toUpperCase()} task. The pair above contains a ${letterNumber()}."),
+                                        Text(
+                                            "Press the ${numberLetter[currentLevel - 1].isOddOrVowl ? "LEFT" : "RIGHT"} key or button."),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            top: widget.isUnscored &&
+                                                    currentLevel == 1
+                                                ? 20
+                                                : 0,
+                                          ),
+                                        ),
+                                        widget.isUnscored && currentLevel == 6
+                                            ? Text(
+                                                "The actual test begins immediately on the next screen.")
+                                            : Container(),
+                                        widget.isUnscored && currentLevel == 6
+                                            ? Text(
+                                                "Remember to answer as quickly as you can.")
+                                            : Container(),
+                                        // Icon(
+                                        // MdiIcons.play,
+                                        //   size: 100,
+                                        // ),
+                                      ]))
+                            : Container(
+                                padding: EdgeInsets.only(
+                                    top: 50, bottom: heightRatio * 525),
+                              ),
                       ])
                     ],
                   ))

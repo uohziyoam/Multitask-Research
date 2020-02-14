@@ -11,6 +11,8 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   firebase_core: ^0.4.3+3
+  material_design_icons_flutter: ^3.4.4995
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -21,3 +23,5 @@ flutter:
 
   assets:
     - assets/
+
+

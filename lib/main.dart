@@ -47,11 +47,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Instruction(isInstruction: true)
-        // body: Test(
-        //   isUnscored: true,
-        // ),
-        // body: Login(),
-        );
+    return Scaffold(
+      // body: Instruction(isInstruction: true)
+      // body: Test(
+      //   isUnscored: false,
+      //   id: "test",
+      // ),
+      body: Login(),
+    );
   }
 }

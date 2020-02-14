@@ -1,3 +1,4 @@
+import 'package:MultitaskResearch/instruction.dart';
 import 'package:MultitaskResearch/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -97,13 +98,8 @@ class _LoginState extends State<Login> {
   void _loginPressed() {
     print('The user wants to login with $_id');
     if (_id.isNotEmpty) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Test(
-                    isUnscored: false,
-                    id: _id,
-                  )));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => Instruction(id: _id)));
     }
   }
 }

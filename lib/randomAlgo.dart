@@ -27,6 +27,8 @@ class RandomAlgorithm {
       }
     }
 
+    listOfIsOddOrVowl = listOfIsOddOrVowl + listOfIsOddOrVowl;
+
     bool isSwitchedTask = true;
 
     for (int i = 0; i < numberOfTasks; i++) {

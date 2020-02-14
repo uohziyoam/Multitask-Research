@@ -1,29 +1,31 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:MultitaskResearch/instrucption-description.dart';
 import 'package:MultitaskResearch/test.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'login.dart';
 
 class Instruction extends StatefulWidget {
-  final bool isInstruction;
-  Instruction({Key key, @required this.isInstruction}) : super(key: key);
+  final String id;
+  Instruction({Key key, @required this.id}) : super(key: key);
 
   @override
   _InstructionState createState() => _InstructionState();
 }
 
 class _InstructionState extends State<Instruction> {
-  Timer timer1, timer2;
+  Timer timer1, timer2, timer3;
   Stopwatch stopwatch;
-  FocusNode focusNode = FocusNode();
+  FocusNode focusNode = new FocusNode();
   double widthRatio, heightRatio;
   bool isCue = false,
       isStimulus = false,
       isLeftButtonClicked = false,
       isRightButtonClicked = false;
-  int currentLevel = 1, instructionStep = 2;
+  int currentLevel = 1, instructionStep = 1;
 
   List<CueStimulus> numberLetter;
 
@@ -34,7 +36,7 @@ class _InstructionState extends State<Instruction> {
   void initState() {
     super.initState();
     buttonClicked();
-    loadGameData(widget.isInstruction).then((s) => setState(() {
+    loadGameData(true).then((s) => setState(() {
           numberLetter = s.list;
         }));
   }
@@ -139,12 +141,14 @@ class _InstructionState extends State<Instruction> {
         isStimulus = true;
         timer1?.cancel();
         timer2?.cancel();
+        timer3?.cancel();
         stopwatch?.stop();
       } else if (instructionStep == 3) {
         isCue = false;
         isStimulus = true;
         timer1?.cancel();
         timer2?.cancel();
+        timer3?.cancel();
         stopwatch?.stop();
       }
     });
@@ -159,19 +163,27 @@ class _InstructionState extends State<Instruction> {
         body: RawKeyboardListener(
             focusNode: focusNode,
             onKey: (value) {
-              bool isKeyUp =
-                  value.toDiagnosticsNode().toString().split("#").first ==
-                      "RawKeyUpEvent";
+              if (value.data.keyLabel == "ArrowLeft") {
+                setState(() {
+                  isLeftButtonClicked = true;
+                  timer3 = Timer(const Duration(milliseconds: 200), () {
+                    setState(() {
+                      isLeftButtonClicked = false;
+                    });
+                  });
+                });
+              }
 
-              setState(() {
-                if (value.data.keyLabel == "ArrowLeft") {
-                  isLeftButtonClicked = !isKeyUp;
-                }
-
-                if (value.data.keyLabel == "ArrowRight") {
-                  isRightButtonClicked = !isKeyUp;
-                }
-              });
+              if (value.data.keyLabel == "ArrowRight") {
+                setState(() {
+                  isRightButtonClicked = true;
+                  timer3 = Timer(const Duration(milliseconds: 200), () {
+                    setState(() {
+                      isRightButtonClicked = false;
+                    });
+                  });
+                });
+              }
             },
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <
                 Widget>[
@@ -234,8 +246,10 @@ class _InstructionState extends State<Instruction> {
                                         Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Test(isUnscored: true, )));
+                                                builder: (context) => Test(
+                                                      isUnscored: true,
+                                                      id: widget.id,
+                                                    )));
                                       },
                                       child: Row(
                                         mainAxisAlignment:
@@ -263,6 +277,13 @@ class _InstructionState extends State<Instruction> {
                                               255, 112, 112, 112);
                                         }),
                                         child: GestureDetector(
+                                            onTapDown: (details) =>
+                                                setState(() {
+                                                  isLeftButtonClicked = true;
+                                                }),
+                                            onTapUp: (details) => setState(() {
+                                                  isLeftButtonClicked = false;
+                                                }),
                                             child: Container(
                                                 width: 160,
                                                 decoration: BoxDecoration(
@@ -282,18 +303,25 @@ class _InstructionState extends State<Instruction> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: <Widget>[
-                                                    Icon(
-                                                      IconData(58846,
-                                                          fontFamily:
-                                                              'MaterialIcons',
-                                                          matchTextDirection:
-                                                              true),
-                                                      size: 35,
-                                                      color: isLeftButtonClicked
-                                                          ? Color.fromARGB(
-                                                              255, 158, 0, 0)
-                                                          : iconColorLeft,
-                                                    ),
+                                                    Transform(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        transform:
+                                                            Matrix4.rotationY(
+                                                                pi),
+                                                        child: Icon(
+                                                          MdiIcons.play,
+                                                          size: 35,
+                                                          color:
+                                                              isLeftButtonClicked
+                                                                  ? Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          158,
+                                                                          0,
+                                                                          0)
+                                                                  : iconColorLeft,
+                                                        )),
                                                     Padding(
                                                       padding: EdgeInsets.only(
                                                           right: 0),
@@ -335,6 +363,13 @@ class _InstructionState extends State<Instruction> {
                                               255, 112, 112, 112);
                                         }),
                                         child: GestureDetector(
+                                            onTapDown: (details) =>
+                                                setState(() {
+                                                  isRightButtonClicked = true;
+                                                }),
+                                            onTapUp: (details) => setState(() {
+                                                  isRightButtonClicked = false;
+                                                }),
                                             child: Container(
                                                 width: 160,
                                                 decoration: BoxDecoration(
@@ -381,11 +416,7 @@ class _InstructionState extends State<Instruction> {
                                                                           166))),
                                                     ),
                                                     Icon(
-                                                      IconData(58847,
-                                                          fontFamily:
-                                                              'MaterialIcons',
-                                                          matchTextDirection:
-                                                              true),
+                                                      MdiIcons.play,
                                                       size: 35,
                                                       color:
                                                           isRightButtonClicked
@@ -395,7 +426,7 @@ class _InstructionState extends State<Instruction> {
                                                                   0,
                                                                   0)
                                                               : iconColorRight,
-                                                    ),
+                                                    )
                                                   ],
                                                 ))),
                                       )
