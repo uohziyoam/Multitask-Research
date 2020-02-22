@@ -2,87 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:MultitaskResearch/CueStimulus.dart';
 import 'package:MultitaskResearch/end.dart';
 import 'package:MultitaskResearch/login.dart';
 import 'package:MultitaskResearch/randomAlgo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
-class CueStimulus {
-  String stimulus;
-  String type;
-  bool isSwitchedTask;
-  bool isOddOrVowl;
-  int partition;
-
-  CueStimulus(
-      {this.stimulus,
-      this.type,
-      this.isSwitchedTask,
-      this.isOddOrVowl,
-      this.partition});
-
-  void flip(bool isFlipped) {
-    stimulus = isFlipped
-        ? new String.fromCharCodes(stimulus.runes.toList().reversed)
-        : stimulus;
-  }
-
-  String toJson() {
-    Map<String, dynamic> mp = {
-      "stimulus": stimulus,
-      "type": type,
-      "isSwitechedTask": isSwitchedTask,
-      "isOddOrVowl": isOddOrVowl
-    };
-    return mp.toString();
-  }
-
-  factory CueStimulus.fromJson(Map parsedJson) {
-    return CueStimulus(
-        stimulus: parsedJson['stimulus'],
-        type: parsedJson['type'],
-        isSwitchedTask: parsedJson['isSwitchedTask'],
-        isOddOrVowl: parsedJson['isOddOrVowl']);
-  }
-}
-
-class ListOfCueStimulus {
-  final List<CueStimulus> list;
-
-  ListOfCueStimulus({this.list});
-
-  factory ListOfCueStimulus.fromJson(List listOfData) {
-    List<CueStimulus> res = [];
-
-    for (var data in listOfData) {
-      res.add(CueStimulus.fromJson(data));
-    }
-
-    return ListOfCueStimulus(list: res);
-  }
-}
-
-Future<String> _loadGameDataAsset() async {
-  return await rootBundle.loadString('assets/config.json');
-}
-
-Future<ListOfCueStimulus> loadGameData(isInstruction) async {
-  String jsonString = await _loadGameDataAsset();
-  final jsonResponse = json.decode(jsonString);
-  List list;
-
-  if (isInstruction) {
-    list = jsonResponse["unscored"] as List;
-  } else {
-    list = jsonResponse["scored"] as List;
-  }
-
-  return ListOfCueStimulus.fromJson(list);
-}
 
 Future<List<CueStimulus>> loadData(isInstruction) async {
   return execuate();
@@ -127,7 +54,7 @@ List<CueStimulus> execuate() {
   randomAlgorithm.flip();
 
   // randomAlgorithm.config.forEach((element) {
-  //   print(element.toJson());
+  //   print(element.type + " " + element.switchSinceSwitch.toString());
   // });
 
   return randomAlgorithm.config;
@@ -169,7 +96,12 @@ List<int> randomSequence(int maxInt) {
 class Test extends StatefulWidget {
   final bool isUnscored;
   final String id;
-  Test({Key key, @required this.isUnscored, @required this.id})
+  final List practiceWidgetRes;
+  Test(
+      {Key key,
+      @required this.isUnscored,
+      @required this.id,
+      this.practiceWidgetRes})
       : super(key: key);
 
   @override
@@ -191,6 +123,7 @@ class _TestState extends State<Test> {
   FocusNode focusNode = FocusNode();
 
   List res = [];
+  List practiceRes = [];
 
   List<CueStimulus> numberLetter;
   Color iconColorRight = Color.fromARGB(255, 112, 112, 112);
@@ -208,10 +141,11 @@ class _TestState extends State<Test> {
 
   @override
   void dispose() {
-    timer1.cancel();
-    timer2.cancel();
-    timer3.cancel();
-    timer5.cancel();
+    timer1?.cancel();
+    timer2?.cancel();
+    timer3?.cancel();
+    timer4?.cancel();
+    timer5?.cancel();
     stopwatch.stop();
     super.dispose();
   }
@@ -228,25 +162,34 @@ class _TestState extends State<Test> {
       "isCorrect": numberLetter[currentLevel - 1].isOddOrVowl == isLeft,
       "isSwitchedTask": numberLetter[currentLevel - 1].isSwitchedTask,
       "type": numberLetter[currentLevel - 1].type,
-      "stimulus": numberLetter[currentLevel - 1].stimulus
+      "stimulus": numberLetter[currentLevel - 1].stimulus,
+      "partition": numberLetter[currentLevel - 1].partition,
+      "exceedThresh": stopwatch.elapsedMilliseconds >= 10000 ? true : false,
+      "testsSinceSwitch": numberLetter[currentLevel - 1].testsSinceSwitch
     };
 
-    // print(numberLetter[currentLevel - 1].isOddOrVowl == isLeft);
-
     res.add(mp);
+
+    if (widget.isUnscored) {
+      // print("here");
+      practiceRes.add(mp);
+    }
   }
 
   bool isTestEnd() {
-    if (currentLevel == 6 && widget.isUnscored) {
+    if (!isEnd && currentLevel == 5 && widget.isUnscored) {
       // jump to new game
+      setState(() {
+        isEnd = true;
+      });
 
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => Test(
-                    isUnscored: false,
-                    id: widget.id,
-                  )));
+                  isUnscored: false,
+                  id: widget.id,
+                  practiceWidgetRes: practiceRes)));
       return true;
     }
 
@@ -256,18 +199,12 @@ class _TestState extends State<Test> {
       });
 
       // send to server
-      List gameConfig = [];
-
       DateTime now = DateTime.now();
-
-      for (CueStimulus numLet in numberLetter) {
-        gameConfig.add(numLet.stimulus);
-      }
       Map<String, dynamic> mp = {
         "id": widget.id,
         "res": res,
+        "practice_res": widget.practiceWidgetRes,
         "test_time": now.toIso8601String()
-        // "config": gameConfig
       };
       firestore
           .collection('multitask')

@@ -1,12 +1,31 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:MultitaskResearch/CueStimulus.dart';
+import 'package:MultitaskResearch/ListOfCueStimulus.dart';
 import 'package:MultitaskResearch/instrucption-description.dart';
 import 'package:MultitaskResearch/test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'login.dart';
+Future<String> _loadGameDataAsset() async {
+  return await rootBundle.loadString('assets/config.json');
+}
+
+Future<ListOfCueStimulus> loadGameData(isInstruction) async {
+  String jsonString = await _loadGameDataAsset();
+  final jsonResponse = json.decode(jsonString);
+  List list;
+
+  if (isInstruction) {
+    list = jsonResponse["unscored"] as List;
+  } else {
+    list = jsonResponse["scored"] as List;
+  }
+
+  return ListOfCueStimulus.fromJson(list);
+}
 
 class Instruction extends StatefulWidget {
   final String id;
