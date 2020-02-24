@@ -8,6 +8,7 @@ const { buildHeader, buildData } = require('./helper');
 admin.initializeApp(functions.config().firebase);
 
 exports.csvJsonReport = functions.https.onRequest((request, response) => {
+    response.set('Access-Control-Allow-Origin', '*');
     const db = admin.firestore()
     const bucketName = 'hci-multitask.appspot.com';
     const fileName = `reports/report.csv`;

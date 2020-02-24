@@ -39,3 +39,4 @@ lib/generated_plugin_registrant.dart
 # Important secrect configs
 KEYS.dart
 .now
+node_modules/

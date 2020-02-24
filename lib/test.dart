@@ -11,7 +11,7 @@ import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-Future<List<CueStimulus>> loadData(isInstruction) async {
+Future<List<CueStimulus>> loadData() async {
   return execuate();
 }
 
@@ -132,7 +132,7 @@ class _TestState extends State<Test> {
   @override
   void initState() {
     super.initState();
-    loadData(widget.isUnscored).then((s) => setState(() {
+    loadData().then((s) => setState(() {
           numberLetter = s;
           totalLevels = s.length;
         }));
@@ -168,7 +168,10 @@ class _TestState extends State<Test> {
       "testsSinceSwitch": numberLetter[currentLevel - 1].testsSinceSwitch
     };
 
-    res.add(mp);
+    if (!widget.isUnscored) {
+      // print("there");
+      res.add(mp);
+    }
 
     if (widget.isUnscored) {
       // print("here");
@@ -177,7 +180,7 @@ class _TestState extends State<Test> {
   }
 
   bool isTestEnd() {
-    if (!isEnd && currentLevel == 5 && widget.isUnscored) {
+    if (!isEnd && currentLevel == 6 && widget.isUnscored) {
       // jump to new game
       setState(() {
         isEnd = true;
@@ -219,7 +222,7 @@ class _TestState extends State<Test> {
   }
 
   void buttonClicked(bool isLeft) {
-    if (currentLevel != 0) {
+    if (!isEnd && currentLevel != 0) {
       wrapResult(isLeft);
     }
     if (isTestEnd()) {
@@ -414,7 +417,7 @@ class _TestState extends State<Test> {
                                 color: Color.fromARGB(255, 240, 244, 244),
                                 child: Text(
                                   widget.isUnscored
-                                      ? "Practice Task $currentLevel of 6"
+                                      ? "Practice Task ${currentLevel == 7 ? 6 : currentLevel} of 6"
                                       : "Task $currentLevel of $totalLevels",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(

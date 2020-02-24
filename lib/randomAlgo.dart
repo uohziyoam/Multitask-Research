@@ -34,8 +34,10 @@ class RandomAlgorithm {
     bool isSwitchedTask = true;
 
     for (int i = 0; i < numberOfTasks; i++) {
-      int numberNextRandom = random.nextInt(4);
-      int letterNextRandom = random.nextInt(4);
+      int evenOddNumberNextRandom = random.nextInt(4);
+      int vowelConsonantLetterNextRandom = random.nextInt(4);
+      int letterNextRandom = random.nextInt(8);
+      int numberNextRandom = random.nextInt(8);
 
       if (config.isNotEmpty) {
         isSwitchedTask = config.last.type != taskType;
@@ -43,14 +45,16 @@ class RandomAlgorithm {
 
       if (taskType == "NUMBER") {
         task = listOfIsOddOrVowl[i]
-            ? letter[letterNextRandom] + odd[numberNextRandom]
-            : letter[letterNextRandom] + even[numberNextRandom];
+            ? letter[letterNextRandom] + odd[evenOddNumberNextRandom]
+            : letter[letterNextRandom] + even[evenOddNumberNextRandom];
       }
 
       if (taskType == "LETTER") {
         task = listOfIsOddOrVowl[i]
-            ? vowels[letterNextRandom] + number[numberNextRandom]
-            : consonants[letterNextRandom] + number[numberNextRandom];
+            ? vowels[vowelConsonantLetterNextRandom] + number[numberNextRandom]
+            : consonants[vowelConsonantLetterNextRandom] +
+                number[numberNextRandom];
+        // print(task);
       }
 
       if (config.isNotEmpty && task == config.last.stimulus) {

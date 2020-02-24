@@ -102,6 +102,10 @@ List<CueStimulus> execuate() {
       countOfLetterNumber = 0,
       countOfOddVowl = 0,
       countOfEvenConsonant = 0,
+      countOfOddConsonant = 0,
+      countOfEvenVowl = 0,
+      countOfSwitchEvent = 0,
+      countOfNoSwitchEvent = 0,
       countOfFreq1 = 0,
       countOfFreq2 = 0,
       countOfFreq3 = 0,
@@ -120,15 +124,40 @@ List<CueStimulus> execuate() {
     if (isNumeric(element.stimulus.substring(0, 1))) {
       countOfNumberLetter += 1;
     }
+
     if (isNumeric(element.stimulus.substring(1, 2))) {
       countOfLetterNumber += 1;
     }
 
-    if (element.isOddOrVowl) {
+    if (isOddVowel(element.stimulus)) {
       countOfOddVowl += 1;
     }
-    if (!element.isOddOrVowl) {
+
+    if (isOddConsonant(element.stimulus)) {
+      countOfOddConsonant += 1;
+    }
+
+    if (isEvenVowel(element.stimulus)) {
+      countOfEvenVowl += 1;
+    }
+
+    if (isEvenConsonant(element.stimulus)) {
       countOfEvenConsonant += 1;
+    }
+
+    // if (element.isOddOrVowl) {
+    //   countOfOddVowl += 1;
+    // }
+    // if (!element.isOddOrVowl) {
+    //   countOfEvenConsonant += 1;
+    // }
+
+    if (element.isSwitchedTask) {
+      countOfSwitchEvent += 1;
+    }
+
+    if (!element.isSwitchedTask) {
+      countOfNoSwitchEvent += 1;
     }
 
     if (element.partition == 1) {
@@ -145,24 +174,24 @@ List<CueStimulus> execuate() {
     }
   });
 
-  if (countOfLetter == 40 &&
-      countOfNumber == 40 &&
-      countOfNumberLetter == 40 &&
-      countOfLetterNumber == 40 &&
-      countOfOddVowl == 40 &&
-      countOfEvenConsonant == 40 &&
-      countOfFreq1 == 8 &&
-      countOfFreq2 == 16 &&
-      countOfFreq3 == 24 &&
-      countOfFreq4 == 32) {
-    isCorrect = true;
-  }
+  // if (countOfLetter == 40 &&
+  //     countOfNumber == 40 &&
+  //     countOfNumberLetter == 40 &&
+  //     countOfLetterNumber == 40 &&
+  //     countOfOddVowl == 40 &&
+  //     countOfEvenConsonant == 40 &&
+  //     countOfFreq1 == 8 &&
+  //     countOfFreq2 == 16 &&
+  //     countOfFreq3 == 24 &&
+  //     countOfFreq4 == 32) {
+  //   isCorrect = true;
+  // }
 
   // file.writeAsStringSync(
-  //     "isCorrect,countOfLetter,countOfNumber,countOfNumberLetter,countOfLetterNumber,countOfOddVowl,countOfEvenConsonant,countOfFreq1,countOfFreq2,countOfFreq3,countOfFreq4\n",
+  //     "isCorrect,countOfLetter,countOfNumber,countOfNumberLetter,countOfLetterNumber,countOfOddVowl,countOfOddConsonant,countOfEvenVowl,countOfEvenConsonant,countOfSwitchEvent,countOfNoSwitchEvent,countOfFreq1,countOfFreq2,countOfFreq3,countOfFreq4\n",
   //     mode: FileMode.append);
-  file.writeAsStringSync(isCorrect ? "T" + "," : "F" + ",",
-      mode: FileMode.append);
+  // file.writeAsStringSync(isCorrect ? "T" + "," : "F" + ",",
+  //     mode: FileMode.append);
   file.writeAsStringSync(countOfLetter.toString() + ",", mode: FileMode.append);
   file.writeAsStringSync(countOfNumber.toString() + ",", mode: FileMode.append);
   file.writeAsStringSync(countOfNumberLetter.toString() + ",",
@@ -171,7 +200,15 @@ List<CueStimulus> execuate() {
       mode: FileMode.append);
   file.writeAsStringSync(countOfOddVowl.toString() + ",",
       mode: FileMode.append);
+  file.writeAsStringSync(countOfOddConsonant.toString() + ",",
+      mode: FileMode.append);
+  file.writeAsStringSync(countOfEvenVowl.toString() + ",",
+      mode: FileMode.append);
   file.writeAsStringSync(countOfEvenConsonant.toString() + ",",
+      mode: FileMode.append);
+  file.writeAsStringSync(countOfSwitchEvent.toString() + ",",
+      mode: FileMode.append);
+  file.writeAsStringSync(countOfNoSwitchEvent.toString() + ",",
       mode: FileMode.append);
   file.writeAsStringSync(countOfFreq1.toString() + ",", mode: FileMode.append);
   file.writeAsStringSync(countOfFreq2.toString() + ",", mode: FileMode.append);
@@ -189,8 +226,81 @@ bool isNumeric(String s) {
   return double.tryParse(s) != null;
 }
 
+bool isOddVowel(String s) {
+  if (s == null) {
+    return false;
+  }
+
+  String start = s.substring(0, 1);
+  String end = s.substring(1, 2);
+
+  if (isNumeric(start)) {
+    return int.parse(start).isOdd && RandomAlgorithm.vowels.contains(end);
+  }
+
+  if (isNumeric(end)) {
+    return int.parse(end).isOdd && RandomAlgorithm.vowels.contains(start);
+  }
+
+  return false;
+}
+
+bool isOddConsonant(String s) {
+  if (s == null) {
+    return false;
+  }
+  String start = s.substring(0, 1);
+  String end = s.substring(1, 2);
+
+  if (isNumeric(start)) {
+    return int.parse(start).isOdd && RandomAlgorithm.consonants.contains(end);
+  }
+
+  if (isNumeric(end)) {
+    return int.parse(end).isOdd && RandomAlgorithm.consonants.contains(start);
+  }
+  return false;
+}
+
+bool isEvenVowel(String s) {
+  if (s == null) {
+    return false;
+  }
+
+  String start = s.substring(0, 1);
+  String end = s.substring(1, 2);
+
+  if (isNumeric(start)) {
+    return int.parse(start).isEven && RandomAlgorithm.vowels.contains(end);
+  }
+
+  if (isNumeric(end)) {
+    return int.parse(end).isEven && RandomAlgorithm.vowels.contains(start);
+  }
+
+  return false;
+}
+
+bool isEvenConsonant(String s) {
+  if (s == null) {
+    return false;
+  }
+  String start = s.substring(0, 1);
+  String end = s.substring(1, 2);
+
+  if (isNumeric(start)) {
+    return int.parse(start).isEven && RandomAlgorithm.consonants.contains(end);
+  }
+
+  if (isNumeric(end)) {
+    return int.parse(end).isEven && RandomAlgorithm.consonants.contains(start);
+  }
+
+  return false;
+}
+
 main(List<String> args) {
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 210; i++) {
     loadData(false);
   }
 }
