@@ -15,22 +15,22 @@ exports.buildHeader = () => {
     for (let i = 0; i < 6; i++) {
         fields.push(`PT${i + 1}_type`);
         fields.push(`PT${i + 1}_switch`);
-        fields.push(`PT${i + 1}_seq`);
+        fields.push(`PT${i + 1}_stimulus`);
         fields.push(`PT${i + 1}_correct`);
         fields.push(`PT${i + 1}_cost`);
         fields.push(`PT${i + 1}_exceedThresh`);
-        fields.push(`PT${i + 1}_partition`);
+        fields.push(`PT${i + 1}_sequence`);
         fields.push(`PT${i + 1}_testsSinceSwitch`);
     }
 
     for (let i = 0; i < 80; i++) {
         fields.push(`T${i + 1}_type`);
         fields.push(`T${i + 1}_switch`);
-        fields.push(`T${i + 1}_seq`);
+        fields.push(`T${i + 1}_stimulus`);
         fields.push(`T${i + 1}_correct`);
         fields.push(`T${i + 1}_cost`);
         fields.push(`T${i + 1}_exceedThresh`);
-        fields.push(`T${i + 1}_partition`);
+        fields.push(`T${i + 1}_sequence`);
         fields.push(`T${i + 1}_testsSinceSwitch`);
     }
 
