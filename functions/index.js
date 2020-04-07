@@ -10,7 +10,7 @@ admin.initializeApp(functions.config().firebase);
 exports.csvJsonReport = functions.https.onRequest((request, response) => {
     response.set('Access-Control-Allow-Origin', '*');
     const db = admin.firestore()
-    const bucketName = 'hci-multitask.appspot.com';
+    const bucketName = 'common-research.appspot.com';
     const fileName = `reports/report.csv`;
     const tempFilePath = path.join(os.tmpdir(), fileName);
 
@@ -32,7 +32,7 @@ exports.csvJsonReport = functions.https.onRequest((request, response) => {
         }).then(() => {
             return myBucket.upload(tempFilePath, { destination: fileName })
         }).then(() => {
-            response.redirect('https://testhtml.now.sh/');
+            response.redirect('https://console.firebase.google.com/');
         }).catch(err => console.log(err))
 });
 
