@@ -66,7 +66,7 @@ If you have a connected device or emulator you can run and deploy the app with `
 
 ## Have a question?
 
-If you need any help, drop [Beck](uohziyoam@hotmail.com) a line! 
+If you need any help, drop [Beck](https://maoyizhou.com) a line! 
 
 ## License
 
