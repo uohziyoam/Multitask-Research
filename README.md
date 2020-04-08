@@ -24,7 +24,7 @@ Most popular browsers do not support Flash any more. Thus, in order to achieve b
 * Click __**Create new access token**__ under File location tab
 * Click token generated below **Access token** (the URL will be copied automatically) and paste the URL into browser, then the file will be automatically downloaded
 
-![Instruction Page](/assets/data-export.gif) 
+![Instruction Page](/assets/data-export1.gif) 
 
 
 ## Program Setup
