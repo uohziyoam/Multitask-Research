@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:html';
+import 'package:MultitaskResearch/FocusTest/TestPage.dart';
+import 'package:MultitaskResearch/FocusTest/gridContent.dart';
+import 'package:MultitaskResearch/FocusTest/instructionContent.dart';
 import 'package:MultitaskResearch/KEYS.dart';
 import 'package:MultitaskResearch/instruction.dart';
 import 'package:MultitaskResearch/login.dart';
@@ -119,6 +122,17 @@ class _MyHomePageState extends State<MyHomePage> {
       //   id: "test",
       // ),
       body: Login(),
+      // body: TestPage(
+      //   title: "Instruction",
+      //   totalLevel: 20,
+      //   // content: Content(),
+      //   content: InstructionContent(
+      //     levelsLeft: 9,
+      //     buttonClick: (res) {
+      //       print(res);
+      //     },
+      //   ),
+      // ),
     );
   }
 }
