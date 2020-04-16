@@ -70,6 +70,6 @@ If you need any help, drop [Beck](https://maoyizhou.com) a line!
 
 ## License
 
-Natrium is released under the MIT License
+This project is released under the MIT License
 
 MIT © [Communication Research Center](http://sites.bu.edu/crc/)
