@@ -12,6 +12,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   firebase_core: ^0.4.3+3
   material_design_icons_flutter: ^3.4.4995
+  url_launcher: ^5.4.2
 
 dev_dependencies:
   flutter_test:
@@ -23,5 +24,14 @@ flutter:
 
   assets:
     - assets/
+
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: fonts/OpenSans-Regular.ttf
+        - asset: fonts/OpenSans-Italic.ttf
+          style: italic
+        - asset: fonts/OpenSans-SemiBold.ttf
+          weight: 700
 
 

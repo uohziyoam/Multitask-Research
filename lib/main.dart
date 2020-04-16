@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:html';
+import 'dart:io';
 import 'package:MultitaskResearch/FocusTest/TestPage.dart';
 import 'package:MultitaskResearch/FocusTest/gridContent.dart';
 import 'package:MultitaskResearch/FocusTest/instructionContent.dart';
 import 'package:MultitaskResearch/KEYS.dart';
+import 'package:MultitaskResearch/OnboardingSite/firstPage.dart';
 import 'package:MultitaskResearch/instruction.dart';
 import 'package:MultitaskResearch/login.dart';
 import 'package:MultitaskResearch/test.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as Firebase;
+import 'package:url_launcher/url_launcher.dart';
 
 Future<void> main() async {
   if (Firebase.apps.isEmpty) {
@@ -27,17 +30,17 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-const String HomeRoute = '/home';
+const String HomeRoute = '/onboarding';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'HCI Research',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
       initialRoute: HomeRoute,
       onGenerateRoute: generateRoute,
     );
@@ -82,6 +85,31 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           builder: (_) => Instruction(
                 id: routingData._queryParameters["id"],
               ));
+    case '/onboarding':
+      return MaterialPageRoute(
+          builder: (_) => Scaffold(
+                  body: FirstPage(
+                id: routingData._queryParameters["id"],
+              )));
+    case '/exports':
+      return MaterialPageRoute(
+        builder: (_) => Scaffold(
+          body: Center(
+            child: RaisedButton(
+              onPressed: () async {
+                const url =
+                    'https://us-central1-common-research.cloudfunctions.net/csvJsonReport';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              child: Text('Export the data'),
+            ),
+          ),
+        ),
+      );
     default:
       return MaterialPageRoute(
           builder: (_) => Scaffold(
@@ -92,9 +120,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
