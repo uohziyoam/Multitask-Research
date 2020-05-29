@@ -614,7 +614,7 @@ class _TestState extends State<Test> {
                                                             .type
                                                             .toUpperCase() ==
                                                         "NUMBER"
-                                                    ? "number. "
+                                                    ? " number. "
                                                     : ". ")),
                                         Text(
                                             "Press the ${numberLetter[currentLevel - 1].isOddOrVowl ? "LEFT" : "RIGHT"} key or button."),
