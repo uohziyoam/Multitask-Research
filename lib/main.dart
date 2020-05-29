@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/multitask',
+      initialRoute: '/onboarding',
       onGenerateRoute: generateRoute,
     );
   }
@@ -73,7 +73,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (routingData.route) {
     case '/home':
       return MaterialPageRoute(builder: (_) => MyHomePage());
-    case '/multitask':
+    case '/exercisets':
       return MaterialPageRoute(
           builder: (_) => MultiTaskLogin(
                 id: routingData._queryParameters["id"],
@@ -98,7 +98,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                   body: FirstPage(
                 id: routingData._queryParameters["id"],
               )));
-    case '/exports':
+    case '/exportts':
       return MaterialPageRoute(
         builder: (_) => Scaffold(
           body: Center(
