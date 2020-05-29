@@ -1,15 +1,16 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:html';
-import 'dart:io';
+import 'package:MultitaskResearch/FocusTest/InstructionPage.dart';
+import 'package:MultitaskResearch/FocusTest/OrderedSquares.dart';
+import 'package:MultitaskResearch/FocusTest/SquareAnimation.dart';
 import 'package:MultitaskResearch/FocusTest/TestPage.dart';
-import 'package:MultitaskResearch/FocusTest/gridContent.dart';
 import 'package:MultitaskResearch/FocusTest/instructionContent.dart';
+import 'package:MultitaskResearch/FocusTest/square.dart';
 import 'package:MultitaskResearch/KEYS.dart';
+import 'package:MultitaskResearch/MultiTask/HomePage.dart';
+import 'package:MultitaskResearch/MultiTask/instruction.dart';
+import 'package:MultitaskResearch/MultiTask/login.dart';
 import 'package:MultitaskResearch/OnboardingSite/firstPage.dart';
-import 'package:MultitaskResearch/instruction.dart';
-import 'package:MultitaskResearch/login.dart';
-import 'package:MultitaskResearch/test.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as Firebase;
 import 'package:url_launcher/url_launcher.dart';
@@ -30,8 +31,6 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-const String HomeRoute = '/onboarding';
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -40,8 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
-      initialRoute: HomeRoute,
+      initialRoute: '/multitask',
       onGenerateRoute: generateRoute,
     );
   }
@@ -75,11 +73,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (routingData.route) {
     case '/home':
       return MaterialPageRoute(builder: (_) => MyHomePage());
-    case '/login':
+    case '/multitask':
       return MaterialPageRoute(
-          builder: (_) => Login(
+          builder: (_) => MultiTaskLogin(
                 id: routingData._queryParameters["id"],
               ));
+    case '/testfocus':
+      return MaterialPageRoute(
+        builder: (_) => TestPage(title: "Test"),
+        // builder: (_) => InstructionPage(
+        //   title: "Test",
+        //   totalLevel: 3,
+        //   content: Container(),
+        // ),
+      );
     case '/instruction':
       return MaterialPageRoute(
           builder: (_) => Instruction(
@@ -116,49 +123,5 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 body: Center(
                     child: Text('No route defined for ${settings.name}')),
               ));
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-// String getId(String url) {
-//   Map<String, String> params = new HashMap<String, String>();
-//   url.replaceFirst("?", "").split("&").forEach((e) {
-//     if (e.contains("=")) {
-//       List<String> split = e.split("=");
-//       params[split[0]] = split[1];
-//     }
-//   });
-
-//   return params["RID"];
-// }
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // body: Instruction(isInstruction: true)
-      // body: Test(
-      //   isUnscored: false,
-      //   id: "test",
-      // ),
-      body: Login(),
-      // body: TestPage(
-      //   title: "Instruction",
-      //   totalLevel: 20,
-      //   // content: Content(),
-      //   content: InstructionContent(
-      //     levelsLeft: 9,
-      //     buttonClick: (res) {
-      //       print(res);
-      //     },
-      //   ),
-      // ),
-    );
   }
 }
