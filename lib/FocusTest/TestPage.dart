@@ -1,31 +1,20 @@
-import 'package:MultitaskResearch/FocusTest/InstructionComponent.dart';
-import 'package:MultitaskResearch/FocusTest/OrderedSquares.dart';
 import 'package:MultitaskResearch/FocusTest/SquareAnimation.dart';
-import 'package:MultitaskResearch/FocusTest/button.dart';
-import 'package:MultitaskResearch/FocusTest/square.dart';
+import 'package:MultitaskResearch/FocusTest/SquareData.dart';
+import 'package:MultitaskResearch/FocusTest/end.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-List<List<M>> before = [
-  [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-  [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-  [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-];
-
-List<List<M>> after = [
-  [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-  [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-  [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-];
-
-List<List<List<M>>> beforeData = [before, before, before];
-List<List<List<M>>> afterData = [after, after, after];
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 
 class TestPage extends StatefulWidget {
   final String title;
+  final String id;
+  final List practiceTestRes;
   TestPage({
     Key key,
     @required this.title,
+    @required this.id,
+    this.practiceTestRes,
   }) : super(key: key);
 
   @override
@@ -33,13 +22,65 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
+  final fs.Firestore firestore = fb.firestore();
   double widthRatio, heightRatio;
   int currentLevel = 1;
+  List data = [];
 
   void nextLevel(cur) {
     setState(() {
       currentLevel = cur;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.title == 'Test') {
+      data = testFocusData;
+    }
+
+    if (widget.title == 'Instruction') {
+      data = testFocusPracticeData;
+    }
+  }
+
+  void submitReport(List exportData) {
+    if (widget.title == 'Test') {
+      // send to server
+      DateTime now = DateTime.now();
+      Map<String, dynamic> mp = {
+        "id": widget.id,
+        "res": exportData,
+        "practice_res": widget.practiceTestRes,
+        "test_time": now.toIso8601String()
+      };
+      print(mp);
+      firestore
+          .collection('testfocus')
+          .add(mp)
+          .then((value) => print(value))
+          .catchError((onError) => print(onError));
+    }
+  }
+
+  void navigateToNextPage(exportData) {
+    if (currentLevel == data.length && widget.title == 'Instruction') {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TestPage(
+              title: "Test",
+              id: widget.id,
+              practiceTestRes: exportData,
+            ),
+          ));
+    }
+
+    if (currentLevel == data.length && widget.title == 'Test') {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => End()));
+    }
   }
 
   @override
@@ -70,7 +111,7 @@ class _TestPageState extends State<TestPage> {
                       height: 20,
                       color: Color.fromARGB(255, 240, 244, 244),
                       child: Text(
-                        widget.title + " $currentLevel of ${beforeData.length}",
+                        widget.title + " $currentLevel of ${data.length}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Color.fromARGB(255, 18, 18, 18),
@@ -78,7 +119,7 @@ class _TestPageState extends State<TestPage> {
                       ),
                     ),
                     LinearProgressIndicator(
-                      value: currentLevel / beforeData.length,
+                      value: currentLevel / data.length,
                     ),
                     Padding(
                         padding: EdgeInsets.only(top: 105),
@@ -87,11 +128,14 @@ class _TestPageState extends State<TestPage> {
                             children: <Widget>[
                               SquareAnimation(
                                 currentLevel: currentLevel,
-                                totalLevel: beforeData.length,
+                                totalLevel: data.length,
                                 nextLevel: nextLevel,
-                                before: beforeData[currentLevel - 1],
-                                after: afterData[currentLevel - 1],
-                              )
+                                before: data[currentLevel - 1]['before'],
+                                after: data[currentLevel - 1]['after'],
+                                submitReport: submitReport,
+                                navigateToNextPage: navigateToNextPage,
+                                title: widget.title,
+                              ),
                             ])),
                     Padding(
                       padding: EdgeInsets.only(top: 200),
@@ -104,12 +148,3 @@ class _TestPageState extends State<TestPage> {
     ]));
   }
 }
-
-// widget.pageType == PageType.TestPage
-//                         ? InstructionContent(
-//                             levelsLeft: 9,
-//                             buttonClick: (res) {
-//                               print(res);
-//                             },
-//                           )
-//                         : Container,

@@ -1,21 +1,22 @@
 import 'package:MultitaskResearch/FocusTest/InstructionComponent.dart';
 import 'package:MultitaskResearch/FocusTest/OrderedSquares.dart';
+import 'package:MultitaskResearch/FocusTest/TestPage.dart';
 import 'package:MultitaskResearch/FocusTest/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-enum PageType { TestPage, InstructionPage }
 
 class InstructionPage extends StatefulWidget {
   final String title;
   final int totalLevel;
   final Widget content;
+  final String id;
 
   InstructionPage({
     Key key,
     @required this.title,
     @required this.totalLevel,
     @required this.content,
+    @required this.id,
   }) : super(key: key);
 
   @override
@@ -95,8 +96,54 @@ class _InstructionPageState extends State<InstructionPage> {
                       },
                     ),
                     Padding(
+                      padding: EdgeInsets.only(top: 25),
+                    ),
+                    Opacity(
+                      opacity: currentLevel != 3 ? 0 : 1,
+                      child: Container(
+                          width: 165,
+                          child: ButtonTheme(
+                              minWidth: widthRatio * 100,
+                              height: 35,
+                              disabledColor: Color.fromARGB(255, 255, 0, 1),
+                              child: RaisedButton(
+                                  elevation: 0,
+                                  focusElevation: 0,
+                                  hoverElevation: 0,
+                                  disabledElevation: 0,
+                                  highlightElevation: 0,
+                                  color: Color.fromARGB(255, 0, 66, 118),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(2.0),
+                                  ),
+                                  onPressed: () {
+                                    if (currentLevel != 3) {
+                                      return;
+                                    }
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => TestPage(
+                                            title: "Instruction",
+                                            id: widget.id,
+                                          ),
+                                        ));
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text('Start the Test',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white)),
+                                    ],
+                                  )))),
+                    ),
+                    Padding(
                       padding: EdgeInsets.only(top: 200),
-                    )
+                    ),
                   ],
                 )),
           ],
@@ -105,12 +152,3 @@ class _InstructionPageState extends State<InstructionPage> {
     ]));
   }
 }
-
-// widget.pageType == PageType.TestPage
-//                         ? InstructionContent(
-//                             levelsLeft: 9,
-//                             buttonClick: (res) {
-//                               print(res);
-//                             },
-//                           )
-//                         : Container,

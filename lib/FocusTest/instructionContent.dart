@@ -3,11 +3,17 @@ import 'package:flutter/widgets.dart';
 
 class InstructionContent extends StatefulWidget {
   final int levelsLeft;
+  final bool isPracticeEnd;
+  final bool isTestEnd;
   final Function buttonClick;
 
-  InstructionContent(
-      {Key key, @required this.levelsLeft, @required this.buttonClick})
-      : super(key: key);
+  InstructionContent({
+    Key key,
+    @required this.levelsLeft,
+    @required this.buttonClick,
+    @required this.isPracticeEnd,
+    @required this.isTestEnd,
+  }) : super(key: key);
 
   @override
   _InstructionContentState createState() => _InstructionContentState();
@@ -88,30 +94,62 @@ class _InstructionContentState extends State<InstructionContent> {
                       )))
             ],
           ),
-          Row(
-            children: <Widget>[
-              Text(
-                "You have ${widget.levelsLeft} more tests to complete",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Color.fromARGB(255, 168, 168, 168),
-                    fontWeight: FontWeight.normal),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Text(
-                "The next test starts immediately",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Color.fromARGB(255, 168, 168, 168),
-                    fontWeight: FontWeight.normal),
-              ),
-            ],
-          )
+          widget.isPracticeEnd
+              ? Row(
+                  children: <Widget>[
+                    Text(
+                      "The following tests are scored.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 168, 168, 168),
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                )
+              : Container(),
+          widget.isTestEnd
+              ? Row(
+                  children: <Widget>[
+                    Text(
+                      "Test is finised.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 168, 168, 168),
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                )
+              : Container(),
+          !widget.isPracticeEnd && !widget.isTestEnd
+              ? Row(
+                  children: <Widget>[
+                    Text(
+                      "You have ${widget.levelsLeft} more tests to complete",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 168, 168, 168),
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                )
+              : Container(),
+          !widget.isPracticeEnd && !widget.isTestEnd
+              ? Row(
+                  children: <Widget>[
+                    Text(
+                      "The next test starts immediately",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 168, 168, 168),
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                )
+              : Container(),
         ]);
   }
 }

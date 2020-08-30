@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/onboarding',
+      initialRoute: '/testfocus',
       onGenerateRoute: generateRoute,
     );
   }
@@ -80,12 +80,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               ));
     case '/testfocus':
       return MaterialPageRoute(
-        builder: (_) => TestPage(title: "Test"),
-        // builder: (_) => InstructionPage(
+        // builder: (_) => TestPage(
         //   title: "Test",
-        //   totalLevel: 3,
-        //   content: Container(),
+        //   id: routingData._queryParameters["id"],
         // ),
+        builder: (_) => InstructionPage(
+          title: "Test",
+          totalLevel: 3,
+          content: Container(),
+          id: routingData._queryParameters["id"],
+        ),
       );
     case '/instruction':
       return MaterialPageRoute(
