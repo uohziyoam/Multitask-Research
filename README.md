@@ -9,8 +9,9 @@ Most popular browsers do not support Flash any more. Thus, in order to achieve b
 
 | Link | Description |
 | :----- | :------ |
-[bu.edu](https://commresearchstudy.com/#/exercisets) | Juggle Task Test HomePage
 [bu.edu/bording](https://commresearchstudy.com/#/instruction) | Onboarding Page
+[bu.edu/exercisets](https://commresearchstudy.com/#/exercisets) | Juggle Task Test HomePage
+[bu.edu/testfocus](https://commresearchstudy.com/#/testfocus) | Focus Test HomePage
 
 ## Screenshots
 ![Instruction Page](/assets/instruction.gif) 
