@@ -18,7 +18,6 @@ class M {
   Color squareColor;
   Color borderColor;
   int degree;
-  bool invisible;
 
   M(
     this.degree,
@@ -37,9 +36,12 @@ class M {
       this.borderColor = WHITE_COLOR_BORDER;
     }
   }
+
+  @override
+  String toString() {
+    return '(${squareColor.toString()}, $degree)';
+  }
 }
-
-
 
 class Square extends StatelessWidget {
   final Color backgroundColor;
@@ -76,16 +78,17 @@ class Square extends StatelessWidget {
   Widget gridGenerator({@required List<List<M>> data}) {
     List<Widget> row = [];
 
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < data.length; i++) {
       List<Widget> subRow = [];
-      for (var j = 0; j < 3; j++) {
+      for (var j = 0; j < data[0].length; j++) {
         subRow.add(
           Square(
-              leftPadding: 5,
-              rightPadding: 5,
-              borderColor: data[i][j].borderColor,
-              backgroundColor: data[i][j].squareColor,
-              degree: data[i][j].degree * 1.0),
+            leftPadding: 5,
+            rightPadding: 5,
+            borderColor: data[i][j].borderColor,
+            backgroundColor: data[i][j].squareColor,
+            degree: data[i][j].degree * 1.0,
+          ),
         );
       }
       row.add(Padding(
@@ -94,8 +97,23 @@ class Square extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center, children: subRow)));
     }
 
-    return Column(
-      children: row,
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          color: Color.fromRGBO(226, 226, 226, 1),
+          width: 5,
+          height: 64,
+        ),
+        Container(
+          color: Color.fromRGBO(226, 226, 226, 1),
+          width: 64,
+          height: 5,
+        ),
+        Column(
+          children: row,
+        )
+      ],
     );
   }
 }

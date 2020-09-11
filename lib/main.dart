@@ -5,6 +5,7 @@ import 'package:MultitaskResearch/FocusTest/OrderedSquares.dart';
 import 'package:MultitaskResearch/FocusTest/SquareAnimation.dart';
 import 'package:MultitaskResearch/FocusTest/TestPage.dart';
 import 'package:MultitaskResearch/FocusTest/instructionContent.dart';
+import 'package:MultitaskResearch/FocusTest/login.dart';
 import 'package:MultitaskResearch/FocusTest/square.dart';
 import 'package:MultitaskResearch/KEYS.dart';
 import 'package:MultitaskResearch/MultiTask/HomePage.dart';
@@ -80,16 +81,21 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               ));
     case '/testfocus':
       return MaterialPageRoute(
-        // builder: (_) => TestPage(
+          builder: (_) => TestFocusLogin(
+                id: routingData._queryParameters["id"],
+              ));
+      return MaterialPageRoute(
+        builder: (_) => TestPage(
+          title: "Test",
+          id: routingData._queryParameters["id"],
+          practiceTestRes: [],
+        ),
+        // builder: (_) => InstructionPage(
         //   title: "Test",
+        //   totalLevel: 3,
+        //   content: Container(),
         //   id: routingData._queryParameters["id"],
         // ),
-        builder: (_) => InstructionPage(
-          title: "Test",
-          totalLevel: 3,
-          content: Container(),
-          id: routingData._queryParameters["id"],
-        ),
       );
     case '/instruction':
       return MaterialPageRoute(

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:MultitaskResearch/FocusTest/SquareData.dart';
 import 'package:MultitaskResearch/FocusTest/instructionContent.dart';
 import 'package:MultitaskResearch/FocusTest/square.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class SquareAnimation extends StatefulWidget {
@@ -11,6 +12,7 @@ class SquareAnimation extends StatefulWidget {
   final Function nextLevel;
   final List<List<M>> before;
   final List<List<M>> after;
+  final int numberOfBlueRectangles;
   final String title;
   final Function submitReport;
   final Function navigateToNextPage;
@@ -22,6 +24,7 @@ class SquareAnimation extends StatefulWidget {
     @required this.nextLevel,
     @required this.before,
     @required this.after,
+    @required this.numberOfBlueRectangles,
     @required this.submitReport,
     @required this.navigateToNextPage,
     @required this.title,
@@ -118,6 +121,7 @@ class _SquareAnimationState extends State<SquareAnimation> {
             "isAnyRedTargetRotated": isAnyRedTargetRotated,
             "userChoice": isYes,
             "timeCost": stopwatch.elapsedMilliseconds,
+            "numberOfBlueRectangles": widget.numberOfBlueRectangles
           });
           print(exportData);
 
@@ -134,11 +138,29 @@ class _SquareAnimationState extends State<SquareAnimation> {
       );
     }
 
-    return Container();
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          color: Color.fromRGBO(226, 226, 226, 1),
+          width: 5,
+          height: 64,
+        ),
+        Container(
+          color: Color.fromRGBO(226, 226, 226, 1),
+          width: 64,
+          height: 5,
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(alignment: Alignment.center, child: create(), height: 500);
+    return Container(
+      alignment: Alignment.center,
+      child: create(),
+      height: 600,
+    );
   }
 }

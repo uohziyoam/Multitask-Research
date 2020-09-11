@@ -1,160 +1,35 @@
-import 'package:MultitaskResearch/FocusTest/square.dart';
+import 'package:MultitaskResearch/FocusTest/generationAlgorithm.dart';
 
-Map<String, dynamic> levelOne = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
+TestFocusRandomAlgorithm algorithm = new TestFocusRandomAlgorithm();
 
-Map<String, dynamic> levelTwo = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
+Map<String, dynamic> levelOne = algorithm.generateConsecutiveTask(true, 0);
 
-Map<String, dynamic> levelThree = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
+Map<String, dynamic> levelTwo = algorithm.generateConsecutiveTask(false, 0);
 
-Map<String, dynamic> levelFour = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
+Map<String, dynamic> levelThree = algorithm.generateConsecutiveTask(true, 2);
 
-Map<String, dynamic> levelFive = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
+Map<String, dynamic> levelFour = algorithm.generateConsecutiveTask(false, 2);
 
-Map<String, dynamic> levelSix = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
+Map<String, dynamic> levelFive = algorithm.generateConsecutiveTask(true, 4);
 
-Map<String, dynamic> levelSeven = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
+Map<String, dynamic> levelSix = algorithm.generateConsecutiveTask(false, 4);
 
-Map<String, dynamic> levelEight = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
+Map<String, dynamic> levelSeven = algorithm.generateConsecutiveTask(true, 6);
 
-Map<String, dynamic> levelNine = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
-
-Map<String, dynamic> levelTen = {
-  'isAnyRedTargetRotated': false,
-  'before': [
-    [M(45, SquareColor.BLUE), M(0, SquareColor.RED), M(90, SquareColor.BLUE)],
-    [M(135, SquareColor.RED), M(45, SquareColor.WHITE), M(0, SquareColor.RED)],
-    [M(45, SquareColor.BLUE), M(0, SquareColor.WHITE), M(135, SquareColor.RED)],
-  ],
-  'after': [
-    [M(0, SquareColor.BLUE), M(0, SquareColor.RED), M(0, SquareColor.BLUE)],
-    [M(0, SquareColor.RED), M(0, SquareColor.BLUE), M(0, SquareColor.RED)],
-    [M(0, SquareColor.BLUE), M(0, SquareColor.WHITE), M(0, SquareColor.RED)],
-  ],
-};
+Map<String, dynamic> levelEight = algorithm.generateConsecutiveTask(false, 6);
 
 List testFocusData = [
   levelOne,
   levelTwo,
-  // levelThree,
-  // levelFour,
-  // levelFive,
-  // levelSix,
-  // levelSeven,
-  // levelEight,
-  // levelNine,
-  // levelTen
+  levelThree,
+  levelFour,
+  levelFive,
+  levelSix,
+  levelSeven,
+  levelEight,
 ];
 
 List testFocusPracticeData = [
   levelOne,
   levelTwo,
-  // levelThree,
 ];

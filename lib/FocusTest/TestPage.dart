@@ -132,6 +132,8 @@ class _TestPageState extends State<TestPage> {
                                 nextLevel: nextLevel,
                                 before: data[currentLevel - 1]['before'],
                                 after: data[currentLevel - 1]['after'],
+                                numberOfBlueRectangles: data[currentLevel - 1]
+                                    ['numberOfBlueRectangles'],
                                 submitReport: submitReport,
                                 navigateToNextPage: navigateToNextPage,
                                 title: widget.title,
