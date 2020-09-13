@@ -10,7 +10,7 @@ class OrderedSquares extends StatelessWidget {
       height: 150,
       width: 655,
       child: Image.asset(
-        "assets/ordered-squares.png",
+        "assets/orderedSquares.png",
         fit: BoxFit.cover,
       ),
     );
