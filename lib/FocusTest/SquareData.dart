@@ -30,6 +30,8 @@ List testFocusData = [
 ];
 
 List testFocusPracticeData = [
-  levelOne,
-  levelTwo,
+  algorithm.generateConsecutiveTask(false, 0),
+  algorithm.generateConsecutiveTask(false, 2),
+  algorithm.generateConsecutiveTask(true, 0),
+  algorithm.generateConsecutiveTask(true, 2),
 ];

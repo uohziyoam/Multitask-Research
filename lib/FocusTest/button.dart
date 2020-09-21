@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Button extends StatefulWidget {
@@ -65,9 +66,7 @@ class _ButtonState extends State<Button> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Icon(
-                      IconData(58846,
-                          fontFamily: 'MaterialIcons',
-                          matchTextDirection: true),
+                      Icons.arrow_left,
                       size: 25,
                       color: currentLevel == 1
                           ? Color.fromARGB(255, 112, 112, 112)
@@ -135,9 +134,7 @@ class _ButtonState extends State<Button> {
                                       : Color.fromARGB(255, 24, 84, 131),
                                 )),
                             Icon(
-                              IconData(58847,
-                                  fontFamily: 'MaterialIcons',
-                                  matchTextDirection: true),
+                              Icons.arrow_right,
                               size: 25,
                               color: currentLevel == 3
                                   ? Color.fromARGB(255, 112, 112, 112)

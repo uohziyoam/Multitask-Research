@@ -126,7 +126,9 @@ class _InstructionContentState extends State<InstructionContent> {
               ? Row(
                   children: <Widget>[
                     Text(
-                      "You have ${widget.levelsLeft} more tests to complete",
+                      widget.levelsLeft == 1
+                          ? "You have 1 more test to complete."
+                          : "You have ${widget.levelsLeft} more tests to complete.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 15,

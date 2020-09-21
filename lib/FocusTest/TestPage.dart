@@ -40,7 +40,7 @@ class _TestPageState extends State<TestPage> {
       data = testFocusData;
     }
 
-    if (widget.title == 'Instruction') {
+    if (widget.title == 'Practice Test') {
       data = testFocusPracticeData;
     }
   }

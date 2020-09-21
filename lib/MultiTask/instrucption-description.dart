@@ -92,9 +92,7 @@ class _InstructionDescriptionState extends State<InstructionDescription> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Icon(
-                          IconData(58846,
-                              fontFamily: 'MaterialIcons',
-                              matchTextDirection: true),
+                          Icons.arrow_left,
                           size: 25,
                           color: currentStep == 1
                               ? Color.fromARGB(255, 112, 112, 112)
@@ -162,9 +160,7 @@ class _InstructionDescriptionState extends State<InstructionDescription> {
                                           : Color.fromARGB(255, 24, 84, 131),
                                     )),
                                 Icon(
-                                  IconData(58847,
-                                      fontFamily: 'MaterialIcons',
-                                      matchTextDirection: true),
+                                  Icons.arrow_right,
                                   size: 25,
                                   color: currentStep == 3
                                       ? Color.fromARGB(255, 112, 112, 112)

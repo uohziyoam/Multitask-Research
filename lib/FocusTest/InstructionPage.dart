@@ -39,9 +39,9 @@ class _InstructionPageState extends State<InstructionPage> {
           "First you'll see a quick flash of some red and blue rectangles. Then you'll see a second scene in which one of the red rectangles may have rotated. Your job will be to note any such change.",
     ),
     InstructionComponent(
-        upperContent: OrderedSquares(),
+        upperContent: Container(),
         instruction:
-            "You'll dod 4 unscored practice tests, then 24 scored tests. The quiz will cover your whole screen to minimize distractions. Hit the \"ESC\" key to return to a normal view.")
+            "You'll do 4 unscored practice tests, then 80 scored tests. The quiz will cover your whole screen to minimize distractions.")
   ];
 
   @override
@@ -125,7 +125,7 @@ class _InstructionPageState extends State<InstructionPage> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => TestPage(
-                                            title: "Instruction",
+                                            title: "Practice Test",
                                             id: widget.id,
                                           ),
                                         ));

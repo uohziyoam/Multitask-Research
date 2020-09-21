@@ -108,7 +108,7 @@ class _MultiTaskLoginState extends State<TestFocusLogin> {
         MaterialPageRoute(
           builder: (context) => InstructionPage(
             id: _id,
-            title: "Test",
+            title: "Instruction",
             totalLevel: 3,
             content: Container(),
           ),
