@@ -55,7 +55,7 @@ class _TestPageState extends State<TestPage> {
         "practice_res": widget.practiceTestRes,
         "test_time": now.toIso8601String()
       };
-      print(mp);
+      // print(mp);
       firestore
           .collection('testfocus')
           .add(mp)
@@ -65,7 +65,7 @@ class _TestPageState extends State<TestPage> {
   }
 
   void navigateToNextPage(exportData) {
-    if (currentLevel == data.length && widget.title == 'Instruction') {
+    if (currentLevel == data.length && widget.title == 'Practice Test') {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

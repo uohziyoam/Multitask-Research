@@ -18,16 +18,25 @@ Map<String, dynamic> levelSeven = algorithm.generateConsecutiveTask(true, 6);
 
 Map<String, dynamic> levelEight = algorithm.generateConsecutiveTask(false, 6);
 
-List testFocusData = [
-  levelOne,
-  levelTwo,
-  levelThree,
-  levelFour,
-  levelFive,
-  levelSix,
-  levelSeven,
-  levelEight,
-];
+List generator() {
+  const int PAIRS = 10;
+  List<int> blueRecPattern = [0, 2, 4, 6];
+
+  List testFocusData = [];
+
+  for (int i = 0; i < PAIRS; i++) {
+    for (int item in blueRecPattern) {
+      testFocusData.add(algorithm.generateConsecutiveTask(true, item));
+      testFocusData.add(algorithm.generateConsecutiveTask(false, item));
+    }
+  }
+
+  testFocusData.shuffle();
+
+  return testFocusData;
+}
+
+List testFocusData = generator();
 
 List testFocusPracticeData = [
   algorithm.generateConsecutiveTask(false, 0),

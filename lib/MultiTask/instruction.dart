@@ -70,7 +70,7 @@ class _InstructionState extends State<Instruction> {
 
   void stopWatchPrint() {
     if (stopwatch != null && stopwatch.isRunning) {
-      print("${stopwatch.elapsedMilliseconds}");
+      // print("${stopwatch.elapsedMilliseconds}");
     }
   }
 

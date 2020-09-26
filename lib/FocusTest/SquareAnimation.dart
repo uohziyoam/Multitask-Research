@@ -111,7 +111,7 @@ class _SquareAnimationState extends State<SquareAnimation> {
       return InstructionContent(
         levelsLeft: widget.totalLevel - widget.currentLevel,
         isPracticeEnd: widget.totalLevel == widget.currentLevel &&
-            widget.title == 'Instruction',
+            widget.title == 'Practice Test',
         isTestEnd:
             widget.totalLevel == widget.currentLevel && widget.title == 'Test',
         buttonClick: (isYes) {
@@ -123,7 +123,7 @@ class _SquareAnimationState extends State<SquareAnimation> {
             "timeCost": stopwatch.elapsedMilliseconds,
             "numberOfBlueRectangles": widget.numberOfBlueRectangles
           });
-          print(exportData);
+          // print(exportData);
 
           if (widget.totalLevel == widget.currentLevel) {
             widget.navigateToNextPage(exportData);

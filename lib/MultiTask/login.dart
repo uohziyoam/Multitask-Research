@@ -101,7 +101,7 @@ class _MultiTaskLoginState extends State<MultiTaskLogin> {
   // These functions can self contain any user auth logic required, they all have access to _email and _password
 
   void _loginPressed() {
-    print('The user wants to login with $_id');
+    // print('The user wants to login with $_id');
 
     if (_id.isNotEmpty) {
       Navigator.pushReplacement(context,

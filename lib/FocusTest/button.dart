@@ -50,7 +50,7 @@ class _ButtonState extends State<Button> {
                         }
                         widget.changeLevel(currentLevel);
                       });
-                      print(currentLevel);
+                      // print(currentLevel);
                     },
               child: Container(
                 decoration: BoxDecoration(
