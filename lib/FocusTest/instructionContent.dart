@@ -125,16 +125,16 @@ class _InstructionContentState extends State<InstructionContent> {
           !widget.isPracticeEnd && !widget.isTestEnd
               ? Row(
                   children: <Widget>[
-                    Text(
-                      widget.levelsLeft == 1
-                          ? "You have 1 more test to complete."
-                          : "You have ${widget.levelsLeft} more tests to complete.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromARGB(255, 168, 168, 168),
-                          fontWeight: FontWeight.normal),
-                    ),
+                    // Text(
+                    //   widget.levelsLeft == 1
+                    //       ? "You have 1 more test to complete."
+                    //       : "You have ${widget.levelsLeft} more tests to complete.",
+                    //   textAlign: TextAlign.center,
+                    //   style: TextStyle(
+                    //       fontSize: 15,
+                    //       color: Color.fromARGB(255, 168, 168, 168),
+                    //       fontWeight: FontWeight.normal),
+                    // ),
                   ],
                 )
               : Container(),

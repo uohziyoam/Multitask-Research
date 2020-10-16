@@ -63,27 +63,27 @@ class _SquareAnimationState extends State<SquareAnimation> {
       isAfter = false;
       isDone = false;
     });
-    timer1 = new Timer(Duration(milliseconds: 300), () {
+    timer1 = new Timer(Duration(milliseconds: 0), () {
       setState(() {
         isBefore = false;
         isAfter = false;
       });
-      timer2 = new Timer(const Duration(milliseconds: 300), () {
+      timer2 = new Timer(const Duration(milliseconds: 200), () {
         setState(() {
           isBefore = true;
           isAfter = false;
         });
-        timer3 = new Timer(Duration(milliseconds: 300), () {
+        timer3 = new Timer(Duration(milliseconds: 100), () {
           setState(() {
             isBefore = false;
             isAfter = false;
           });
-          timer4 = new Timer(Duration(milliseconds: 300), () {
+          timer4 = new Timer(Duration(milliseconds: 900), () {
             setState(() {
               isBefore = false;
               isAfter = true;
             });
-            timer5 = new Timer(Duration(milliseconds: 300), () {
+            timer5 = new Timer(Duration(milliseconds: 2000), () {
               setState(() {
                 isBefore = false;
                 isAfter = false;

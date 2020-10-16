@@ -41,7 +41,7 @@ class _InstructionPageState extends State<InstructionPage> {
     InstructionComponent(
         upperContent: Container(),
         instruction:
-            "You'll do 4 unscored practice tests, then 80 scored tests. The quiz will cover your whole screen to minimize distractions.")
+            "You'll do 4 unscored practice tests, then 80 scored tests.")
   ];
 
   @override
