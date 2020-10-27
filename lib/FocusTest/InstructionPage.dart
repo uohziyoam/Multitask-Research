@@ -34,7 +34,14 @@ class _InstructionPageState extends State<InstructionPage> {
           "Your task in this test is to concentrate on the red rectangles while ignoring the blue rectangles.",
     ),
     InstructionComponent(
-      upperContent: OrderedSquares(),
+      upperContent: Container(
+        // height: 150,
+        width: 655,
+        child: Image.asset(
+          "assets/second.png",
+          fit: BoxFit.cover,
+        ),
+      ),
       instruction:
           "First you'll see a quick flash of some red and blue rectangles. Then you'll see a second scene in which one of the red rectangles may have rotated. Your job will be to note any such change.",
     ),
